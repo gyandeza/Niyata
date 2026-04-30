@@ -1,55 +1,805 @@
 <!DOCTYPE html>
+
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Garden Villa Pekanbaru</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garden Villa Pekanbaru — Your Private Tropical Escape</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --green-deep: #1a3028;
+      --green-mid: #2d5a40;
+      --green-light: #4a8c5c;
+      --cream: #f5efe6;
+      --cream-dark: #e8ddd0;
+      --gold: #c9a96e;
+      --gold-light: #e2c99a;
+      --white: #fafaf8;
+    }
+    * { scroll-behavior: smooth; }
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: var(--cream);
+      color: var(--green-deep);
+      overflow-x: hidden;
+    }
+    .font-display { font-family: 'Cormorant Garamond', serif; }
+
+```
+/* Navbar */
+.navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  transition: all 0.4s ease;
+}
+.navbar.scrolled {
+  background: rgba(26,48,40,0.95);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 2px 30px rgba(0,0,0,0.3);
+}
+
+/* Hero */
+.hero-section {
+  height: 100svh; min-height: 600px;
+  position: relative; overflow: hidden;
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background-image: url('https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1800&auto=format&fit=crop&q=80');
+  background-size: cover; background-position: center;
+  transform: scale(1.05);
+  transition: transform 8s ease;
+}
+.hero-bg.loaded { transform: scale(1); }
+.hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(15,30,22,0.55) 0%,
+    rgba(15,30,22,0.30) 40%,
+    rgba(15,30,22,0.75) 100%
+  );
+}
+.hero-content {
+  position: relative; z-index: 2;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  height: 100%; text-align: center; padding: 2rem;
+}
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  border: 1px solid rgba(201,169,110,0.6);
+  color: var(--gold-light);
+  padding: 0.4rem 1.2rem; border-radius: 50px;
+  font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase;
+  margin-bottom: 1.5rem;
+  animation: fadeInDown 1s ease both;
+}
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2.8rem, 8vw, 6.5rem);
+  font-weight: 300; color: var(--white);
+  line-height: 1.08; letter-spacing: -0.01em;
+  animation: fadeInUp 1s ease 0.2s both;
+}
+.hero-title em { font-style: italic; color: var(--gold-light); }
+.hero-sub {
+  margin-top: 1.2rem;
+  font-size: clamp(0.95rem, 2.5vw, 1.2rem);
+  color: rgba(245,239,230,0.85);
+  font-weight: 300; letter-spacing: 0.03em;
+  max-width: 520px;
+  animation: fadeInUp 1s ease 0.4s both;
+}
+.hero-cta-wrap {
+  margin-top: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  animation: fadeInUp 1s ease 0.6s both;
+}
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 0.6rem;
+  background: var(--gold); color: var(--green-deep);
+  padding: 1rem 2.2rem; border-radius: 50px;
+  font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 8px 30px rgba(201,169,110,0.4);
+  transition: all 0.3s ease;
+}
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(201,169,110,0.5);
+}
+.btn-outline {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  border: 1px solid rgba(245,239,230,0.5); color: var(--white);
+  padding: 0.8rem 2rem; border-radius: 50px;
+  font-weight: 400; font-size: 0.85rem; letter-spacing: 0.05em; text-transform: uppercase;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.btn-outline:hover {
+  background: rgba(245,239,230,0.1); border-color: rgba(245,239,230,0.8);
+}
+.hero-scroll {
+  position: absolute; bottom: 2.5rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.4rem;
+  color: rgba(245,239,230,0.6); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+  animation: bounce 2s infinite 1.5s;
+  z-index: 2;
+}
+.scroll-line {
+  width: 1px; height: 40px;
+  background: linear-gradient(to bottom, rgba(245,239,230,0.6), transparent);
+}
+
+/* Section styles */
+.section-label {
+  font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); font-weight: 500;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 300; line-height: 1.15;
+  color: var(--green-deep);
+}
+
+/* Feature cards */
+.feature-card {
+  background: var(--white);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 24px rgba(26,48,40,0.07);
+  transition: all 0.35s ease;
+  border: 1px solid rgba(201,169,110,0.12);
+}
+.feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 40px rgba(26,48,40,0.13);
+  border-color: rgba(201,169,110,0.3);
+}
+.feature-icon {
+  width: 56px; height: 56px; border-radius: 14px;
+  background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.2rem;
+  font-size: 1.5rem;
+}
+
+/* Gallery */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  grid-template-rows: auto;
+  gap: 12px;
+}
+.g1 { grid-column: span 8; grid-row: span 2; height: 420px; }
+.g2 { grid-column: span 4; height: 204px; }
+.g3 { grid-column: span 4; height: 204px; }
+.g4 { grid-column: span 4; height: 200px; }
+.g5 { grid-column: span 4; height: 200px; }
+.g6 { grid-column: span 4; height: 200px; }
+@media (max-width: 768px) {
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .g1,.g2,.g3,.g4,.g5,.g6 { grid-column: span 1; height: 180px; }
+  .g1 { grid-column: span 2; height: 240px; }
+}
+.gallery-item {
+  border-radius: 16px; overflow: hidden; position: relative;
+  cursor: pointer;
+}
+.gallery-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.gallery-item:hover img { transform: scale(1.06); }
+.gallery-item::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(26,48,40,0.5), transparent);
+  opacity: 0; transition: opacity 0.3s;
+}
+.gallery-item:hover::after { opacity: 1; }
+
+/* Packages */
+.package-card {
+  background: var(--white);
+  border-radius: 24px;
+  padding: 2.2rem 2rem;
+  border: 1.5px solid rgba(201,169,110,0.15);
+  transition: all 0.35s ease;
+  position: relative; overflow: hidden;
+}
+.package-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--green-light), var(--gold));
+  opacity: 0; transition: opacity 0.3s;
+}
+.package-card:hover { transform: translateY(-8px); border-color: var(--gold); box-shadow: 0 20px 50px rgba(26,48,40,0.12); }
+.package-card:hover::before { opacity: 1; }
+.package-card.featured {
+  background: linear-gradient(145deg, var(--green-deep), var(--green-mid));
+  border-color: var(--gold);
+  color: var(--white);
+}
+.package-card.featured::before { opacity: 1; }
+.package-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem; font-weight: 300; line-height: 1;
+}
+.package-feature {
+  display: flex; align-items: center; gap: 0.6rem;
+  font-size: 0.88rem; padding: 0.4rem 0;
+}
+.check-icon { color: var(--green-light); flex-shrink: 0; }
+.featured .check-icon { color: var(--gold-light); }
+
+/* Testimonials */
+.testi-card {
+  background: var(--white);
+  border-radius: 20px; padding: 2rem;
+  box-shadow: 0 4px 20px rgba(26,48,40,0.07);
+  border: 1px solid rgba(201,169,110,0.1);
+  transition: all 0.3s ease;
+}
+.testi-card:hover { box-shadow: 0 12px 35px rgba(26,48,40,0.12); transform: translateY(-4px); }
+.stars { color: var(--gold); letter-spacing: 2px; }
+
+/* Animations */
+@keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+@keyframes fadeInDown { from { opacity:0; transform:translateY(-20px); } to { opacity:1; transform:translateY(0); } }
+@keyframes bounce { 0%,100% { transform:translateX(-50%) translateY(0); } 50% { transform:translateX(-50%) translateY(8px); } }
+@keyframes float { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+
+/* Reveal on scroll */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+
+/* WhatsApp float button */
+.wa-float {
+  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200;
+  width: 56px; height: 56px; border-radius: 50%;
+  background: #25D366;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 6px 24px rgba(37,211,102,0.45);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  animation: float 3s ease-in-out infinite;
+}
+.wa-float:hover { transform: scale(1.1); box-shadow: 0 10px 30px rgba(37,211,102,0.55); }
+
+/* Map */
+.map-wrap { border-radius: 20px; overflow: hidden; box-shadow: 0 8px 30px rgba(26,48,40,0.12); }
+
+/* FAQ */
+.faq-item { border-bottom: 1px solid rgba(201,169,110,0.2); }
+.faq-btn {
+  width: 100%; text-align: left; padding: 1.2rem 0;
+  display: flex; align-items: center; justify-content: space-between;
+  font-weight: 500; font-size: 1rem;
+  background: none; border: none; cursor: pointer; color: var(--green-deep);
+  transition: color 0.2s;
+}
+.faq-btn:hover { color: var(--green-mid); }
+.faq-answer {
+  max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+  font-size: 0.92rem; color: #5a6e62; line-height: 1.7;
+}
+.faq-answer.open { max-height: 200px; padding-bottom: 1rem; }
+.faq-icon { transition: transform 0.3s; flex-shrink: 0; }
+.faq-icon.open { transform: rotate(45deg); }
+
+/* Organic blob background */
+.blob-bg {
+  position: absolute; border-radius: 50%; filter: blur(80px);
+  opacity: 0.35; pointer-events: none;
+}
+```
+
+  </style>
 </head>
+<body>
 
-<body class="bg-gray-100">
+<!-- WhatsApp Float -->
 
-<!-- HERO -->
-<section class="bg-green-700 text-white text-center p-10">
-  <h1 class="text-4xl font-bold">Garden Villa Pekanbaru</h1>
-  <p class="mt-3">Private Nature Experience for Healing & Gathering</p>
-  <a href="https://wa.me/628117500393" 
-     class="mt-5 inline-block bg-white text-green-700 px-6 py-3 rounded-lg font-bold">
-     Book Sekarang
-  </a>
+<a href="https://wa.me/6282294688823?text=Saya%20ingin%20booking%20Garden%20Villa%20Pekanbaru" target="_blank" class="wa-float" aria-label="Chat WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="white">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<!-- Navbar -->
+
+<nav class="navbar px-6 py-5" id="navbar">
+  <div class="max-w-6xl mx-auto flex items-center justify-between">
+    <div class="text-white">
+      <div class="font-display text-xl font-light tracking-wide">Garden Villa</div>
+      <div style="font-size:0.6rem; letter-spacing:0.2em; color:rgba(201,169,110,0.8); text-transform:uppercase;">Pekanbaru</div>
+    </div>
+    <div class="hidden md:flex items-center gap-8">
+      <a href="#experience" class="text-white/80 hover:text-white text-sm tracking-wide transition">Experience</a>
+      <a href="#gallery" class="text-white/80 hover:text-white text-sm tracking-wide transition">Gallery</a>
+      <a href="#packages" class="text-white/80 hover:text-white text-sm tracking-wide transition">Packages</a>
+      <a href="#location" class="text-white/80 hover:text-white text-sm tracking-wide transition">Location</a>
+    </div>
+    <a href="https://wa.me/6282294688823?text=Saya%20ingin%20booking%20Garden%20Villa%20Pekanbaru" target="_blank" class="btn-primary" style="padding:0.6rem 1.5rem; font-size:0.78rem;">
+      Book Now
+    </a>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+
+<section class="hero-section" id="hero">
+  <div class="hero-bg" id="heroBg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>✦</span> Private Villa · Pekanbaru <span>✦</span>
+    </div>
+    <h1 class="hero-title">
+      Your Secret<br/><em>Garden Escape</em>
+    </h1>
+    <p class="hero-sub">
+      A hidden sanctuary of lush greenery, golden lanterns, and pure serenity — where every moment feels like magic.
+    </p>
+    <div class="hero-cta-wrap">
+      <a href="https://wa.me/6282294688823?text=Saya%20ingin%20booking%20Garden%20Villa%20Pekanbaru" target="_blank" class="btn-primary">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Book Now via WhatsApp
+      </a>
+      <a href="#experience" class="btn-outline">
+        Explore the Villa ↓
+      </a>
+    </div>
+  </div>
+  <div class="hero-scroll">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
 </section>
 
-<!-- EXPERIENCE -->
-<section class="p-10 text-center">
-  <h2 class="text-2xl font-bold mb-5">Experience</h2>
-  <p>Kebun buah • Villa aesthetic • Private space • Healing vibes</p>
-</section>
+<!-- ─── INTRO STRIP ─── -->
 
-<!-- PACKAGES -->
-<section class="p-10 bg-white text-center">
-  <h2 class="text-2xl font-bold mb-5">Paket</h2>
-  <div class="flex justify-center gap-5">
-    <div class="bg-gray-100 p-5 rounded">
-      <h3>Basic</h3>
-      <p>Rp150K</p>
+<section style="background: var(--green-deep);" class="py-6 px-6">
+  <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-center gap-8 md:gap-16">
+    <div class="flex items-center gap-3 text-white/80">
+      <span style="color:var(--gold);">🌿</span>
+      <span class="text-sm tracking-wide">Private Garden</span>
     </div>
-    <div class="bg-gray-100 p-5 rounded">
-      <h3>Private</h3>
-      <p>Rp350K</p>
+    <div style="width:1px; height:24px; background:rgba(255,255,255,0.15);" class="hidden md:block"></div>
+    <div class="flex items-center gap-3 text-white/80">
+      <span style="color:var(--gold);">🌙</span>
+      <span class="text-sm tracking-wide">Aesthetic Night Lights</span>
     </div>
-    <div class="bg-gray-100 p-5 rounded">
-      <h3>VIP</h3>
-      <p>Rp750K</p>
+    <div style="width:1px; height:24px; background:rgba(255,255,255,0.15);" class="hidden md:block"></div>
+    <div class="flex items-center gap-3 text-white/80">
+      <span style="color:var(--gold);">🍃</span>
+      <span class="text-sm tracking-wide">Fruit Garden Tour</span>
+    </div>
+    <div style="width:1px; height:24px; background:rgba(255,255,255,0.15);" class="hidden md:block"></div>
+    <div class="flex items-center gap-3 text-white/80">
+      <span style="color:var(--gold);">📸</span>
+      <span class="text-sm tracking-wide">Content Creator Ready</span>
     </div>
   </div>
 </section>
 
-<!-- CTA -->
-<section class="text-center p-10">
-  <a href="https://wa.me/628117500393" 
-     class="bg-green-700 text-white px-8 py-4 rounded-lg text-lg">
-     Reservasi Sekarang
-  </a>
+<!-- ─── EXPERIENCE ─── -->
+
+<section id="experience" class="py-20 px-6" style="background: var(--cream);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <div class="section-label mb-3">The Experience</div>
+      <h2 class="section-title">More Than Just a Stay.<br/><em style="font-style:italic; color:var(--green-mid);">It's a Feeling.</em></h2>
+      <p class="mt-4 text-sm md:text-base" style="color:#6b7d73; max-width:520px; margin:1rem auto 0;">
+        Garden Villa is crafted for those who seek stillness, connection, and a beautiful backdrop for life's moments.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="feature-card reveal reveal-delay-1">
+        <div class="feature-icon">🌿</div>
+        <h3 class="font-display text-xl font-semibold mb-2" style="color:var(--green-deep);">Private Space</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b7d73;">Exclusive access to a fully private garden villa. No strangers. Just you, your people, and nature.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-2">
+        <div class="feature-icon">🍉</div>
+        <h3 class="font-display text-xl font-semibold mb-2" style="color:var(--green-deep);">Fruit Garden</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b7d73;">Wander through our lush fruit garden. Pick fresh tropical fruits straight from the trees.</p>
+      </div>
+      <div class="feature-card reveal reveal-delay-3">
+        <div class="feature-icon" style="background: linear-gradient(135deg, #2a1f0f, #6b4c1e);">✨</div>
+        <h3 class="font-display text-xl font-semibold mb-2" style="color:var(--green-deep);">Night Ambiance</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b7d73;">As dusk falls, the garden transforms with warm fairy lights and lanterns. Pure golden magic.</p>
+      </div>
+      <div class="feature-card reveal" style="transition-delay:0.4s;">
+        <div class="feature-icon">🧘</div>
+        <h3 class="font-display text-xl font-semibold mb-2" style="color:var(--green-deep);">Healing Escape</h3>
+        <p class="text-sm leading-relaxed" style="color:#6b7d73;">Disconnect from the noise. Perfect for healing retreats, intimate gatherings, or content creation.</p>
+      </div>
+    </div>
+  </div>
 </section>
+
+<!-- ─── GALLERY ─── -->
+
+<section id="gallery" class="py-20 px-6" style="background:#f0e9de;">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-12 reveal">
+      <div class="section-label mb-3">Visual Journey</div>
+      <h2 class="section-title">A Glimpse of<br/><em style="font-style:italic; color:var(--green-mid);">Paradise</em></h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <div class="gallery-item g1">
+        <img src="https://images.unsplash.com/photo-1615460549969-36fa19521a4f?w=900&auto=format&fit=crop&q=80" alt="Villa garden night" loading="lazy"/>
+      </div>
+      <div class="gallery-item g2">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&auto=format&fit=crop&q=80" alt="Tropical villa" loading="lazy"/>
+      </div>
+      <div class="gallery-item g3">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&auto=format&fit=crop&q=80" alt="Garden lights" loading="lazy"/>
+      </div>
+      <div class="gallery-item g4">
+        <img src="https://images.unsplash.com/photo-1596394516093-501ba68a0ba6?w=600&auto=format&fit=crop&q=80" alt="Outdoor villa" loading="lazy"/>
+      </div>
+      <div class="gallery-item g5">
+        <img src="https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=600&auto=format&fit=crop&q=80" alt="Tropical garden" loading="lazy"/>
+      </div>
+      <div class="gallery-item g6">
+        <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=600&auto=format&fit=crop&q=80" alt="Villa exterior" loading="lazy"/>
+      </div>
+    </div>
+    <p class="text-center mt-6 text-sm" style="color:#8a9e93;">
+      📸 Content Creator Friendly · Instagrammable spots throughout
+    </p>
+  </div>
+</section>
+
+<!-- ─── PACKAGES ─── -->
+
+<section id="packages" class="py-20 px-6" style="background: var(--cream);">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <div class="section-label mb-3">Choose Your Experience</div>
+      <h2 class="section-title">Our <em style="font-style:italic; color:var(--green-mid);">Packages</em></h2>
+      <p class="mt-4 text-sm" style="color:#6b7d73; max-width:400px; margin: 1rem auto 0;">Every moment deserves the perfect setting. Choose yours.</p>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-start">
+
+```
+  <!-- Basic -->
+  <div class="package-card reveal reveal-delay-1">
+    <div class="section-label mb-1">Basic</div>
+    <div class="font-display text-4xl font-light mt-2" style="color:var(--green-deep);">
+      Rp 350K
+    </div>
+    <div class="text-xs mt-1 mb-5" style="color:#8a9e93;">/ sesi (3 jam)</div>
+    <div style="height:1px; background:rgba(201,169,110,0.2); margin-bottom:1.2rem;"></div>
+    <div class="space-y-1 mb-7">
+      <div class="package-feature"><span class="check-icon">✓</span> Akses taman privat</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Foto spot outdoor</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Kapasitas maks. 8 orang</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Free parkir</div>
+      <div class="package-feature" style="color:#b0bdb7;"><span>—</span> Akses kebun buah</div>
+      <div class="package-feature" style="color:#b0bdb7;"><span>—</span> Night lighting setup</div>
+      <div class="package-feature" style="color:#b0bdb7;"><span>—</span> Minuman welcome</div>
+    </div>
+    <a href="https://wa.me/6282294688823?text=Saya%20ingin%20booking%20Garden%20Villa%20Pekanbaru%20untuk%20Paket%20Basic" target="_blank" class="block w-full text-center py-3 rounded-full text-sm font-semibold tracking-wide transition" style="border:1.5px solid var(--green-mid); color:var(--green-mid);" onmouseover="this.style.background='var(--green-mid)';this.style.color='white';" onmouseout="this.style.background='transparent';this.style.color='var(--green-mid)';">
+      Pesan Paket Basic
+    </a>
+  </div>
+
+  <!-- Private (Featured) -->
+  <div class="package-card featured reveal reveal-delay-2" style="margin-top:-1rem;">
+    <div style="position:absolute; top:1.2rem; right:1.2rem; background:var(--gold); color:var(--green-deep); font-size:0.65rem; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; padding:0.3rem 0.8rem; border-radius:50px;">Most Popular</div>
+    <div class="section-label mb-1" style="color:var(--gold-light);">Private</div>
+    <div class="font-display text-4xl font-light mt-2" style="color:var(--white);">
+      Rp 550K
+    </div>
+    <div class="text-xs mt-1 mb-5" style="color:rgba(245,239,230,0.6);">/ sesi (5 jam)</div>
+    <div style="height:1px; background:rgba(201,169,110,0.25); margin-bottom:1.2rem;"></div>
+    <div class="space-y-1 mb-7">
+      <div class="package-feature text-white/90"><span class="check-icon">✓</span> Semua fitur Basic</div>
+      <div class="package-feature text-white/90"><span class="check-icon">✓</span> Akses kebun buah</div>
+      <div class="package-feature text-white/90"><span class="check-icon">✓</span> Night lighting aesthetic</div>
+      <div class="package-feature text-white/90"><span class="check-icon">✓</span> Kapasitas maks. 15 orang</div>
+      <div class="package-feature text-white/90"><span class="check-icon">✓</span> Welcome drink</div>
+      <div class="package-feature text-white/90"><span class="check-icon">✓</span> Dekorasi dasar</div>
+      <div class="package-feature" style="color:rgba(245,239,230,0.45);"><span>—</span> Katering & hamper</div>
+    </div>
+    <a href="https://wa.me/6282294688823?text=Saya%20ingin%20booking%20Garden%20Villa%20Pekanbaru%20untuk%20Paket%20Private" target="_blank" class="block w-full text-center py-3 rounded-full text-sm font-semibold tracking-wide transition" style="background:var(--gold); color:var(--green-deep);" onmouseover="this.style.background='var(--gold-light)';" onmouseout="this.style.background='var(--gold)';">
+      Pesan Paket Private
+    </a>
+  </div>
+
+  <!-- VIP -->
+  <div class="package-card reveal reveal-delay-3">
+    <div class="section-label mb-1">VIP</div>
+    <div class="font-display text-4xl font-light mt-2" style="color:var(--green-deep);">
+      Rp 950K
+    </div>
+    <div class="text-xs mt-1 mb-5" style="color:#8a9e93;">/ sesi (full day)</div>
+    <div style="height:1px; background:rgba(201,169,110,0.2); margin-bottom:1.2rem;"></div>
+    <div class="space-y-1 mb-7">
+      <div class="package-feature"><span class="check-icon">✓</span> Semua fitur Private</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Full day exclusive access</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Dekorasi premium</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Katering ringan</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Kapasitas maks. 30 orang</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Dokumentasi foto dasar</div>
+      <div class="package-feature"><span class="check-icon">✓</span> Hamper + souvenir tamu</div>
+    </div>
+    <a href="https://wa.me/6282294688823?text=Saya%20ingin%20booking%20Garden%20Villa%20Pekanbaru%20untuk%20Paket%20VIP" target="_blank" class="block w-full text-center py-3 rounded-full text-sm font-semibold tracking-wide transition" style="background:var(--green-deep); color:white;" onmouseover="this.style.background='var(--green-mid)';" onmouseout="this.style.background='var(--green-deep)';">
+      Pesan Paket VIP
+    </a>
+  </div>
+
+</div>
+<p class="text-center text-xs mt-8" style="color:#8a9e93;">
+  Harga dapat berubah. Hubungi kami via WhatsApp untuk info terbaru & tanggal tersedia.
+</p>
+```
+
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+
+<section id="testimonials" class="py-20 px-6" style="background: linear-gradient(135deg, var(--green-deep) 0%, #1f3d2c 100%); position:relative; overflow:hidden;">
+  <div class="blob-bg" style="width:400px;height:400px;background:var(--green-light);top:-100px;right:-100px;"></div>
+  <div class="blob-bg" style="width:300px;height:300px;background:var(--gold);bottom:-80px;left:-80px;opacity:0.15;"></div>
+  <div class="max-w-6xl mx-auto relative z-10">
+    <div class="text-center mb-14 reveal">
+      <div class="section-label mb-3" style="color:var(--gold-light);">Kata Mereka</div>
+      <h2 class="section-title" style="color:var(--white);">Real Stories, <em style="font-style:italic; color:var(--gold-light);">Real Magic</em></h2>
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+```
+  <div class="testi-card reveal reveal-delay-1">
+    <div class="stars mb-3">★★★★★</div>
+    <p class="text-sm leading-relaxed mb-5" style="color:#4a5e52; font-style:italic;">
+      "Honestly salah satu tempat paling chill yang pernah aku datengin di Pekanbaru. Lampu-lampunya malam hari itu estetik banget, beneran kayak lagi di resort. Wajib balik lagi! 🌿"
+    </p>
+    <div class="flex items-center gap-3">
+      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--green-light),var(--green-mid));display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.85rem;">A</div>
+      <div>
+        <div class="font-semibold text-sm" style="color:var(--green-deep);">Aulia Rahmawati</div>
+        <div class="text-xs" style="color:#8a9e93;">Content Creator · Pekanbaru</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testi-card reveal reveal-delay-2">
+    <div class="stars mb-3">★★★★★</div>
+    <p class="text-sm leading-relaxed mb-5" style="color:#4a5e52; font-style:italic;">
+      "Kami pesan paket Private buat anniversary, dan hasilnya melampaui ekspektasi. Dekorasi, suasana, kebun buahnya — semuanya sempurna. Pelayanan ramah dan responsif via WA. Highly recommended!"
+    </p>
+    <div class="flex items-center gap-3">
+      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#c9a96e,#8b6914);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.85rem;">R</div>
+      <div>
+        <div class="font-semibold text-sm" style="color:var(--green-deep);">Rizky & Nadira</div>
+        <div class="text-xs" style="color:#8a9e93;">Couple · Pekanbaru</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="testi-card reveal reveal-delay-3">
+    <div class="stars mb-3">★★★★★</div>
+    <p class="text-sm leading-relaxed mb-5" style="color:#4a5e52; font-style:italic;">
+      "Bawa keluarga kecil kesini buat gathering, anak-anak seneng banget petik buah langsung! Tempatnya bersih, adem, dan privat. Foto-foto jadi bagus semua tanpa filter. 10/10 akan balik lagi."
+    </p>
+    <div class="flex items-center gap-3">
+      <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#5a8c6e,#2d5a40);display:flex;align-items:center;justify-content:center;color:white;font-weight:600;font-size:0.85rem;">F</div>
+      <div>
+        <div class="font-semibold text-sm" style="color:var(--green-deep);">Fajar Hidayat</div>
+        <div class="text-xs" style="color:#8a9e93;">Keluarga Muda · Pekanbaru</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+```
+
+  </div>
+</section>
+
+<!-- ─── LOCATION ─── -->
+
+<section id="location" class="py-20 px-6" style="background:var(--cream);">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal">
+        <div class="section-label mb-3">Find Us</div>
+        <h2 class="section-title mb-6">Visit Our <em style="font-style:italic; color:var(--green-mid);">Garden</em></h2>
+        <div class="space-y-4 mb-8">
+          <div class="flex items-start gap-3">
+            <span style="color:var(--gold); font-size:1.3rem; margin-top:0.1rem;">📍</span>
+            <div>
+              <div class="font-semibold mb-1" style="color:var(--green-deep);">Alamat</div>
+              <p class="text-sm leading-relaxed" style="color:#6b7d73;">Jl. Garuda Sakti, Pekanbaru, Riau<br/>Tersedia petunjuk arah via WhatsApp</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span style="color:var(--gold); font-size:1.3rem; margin-top:0.1rem;">🕐</span>
+            <div>
+              <div class="font-semibold mb-1" style="color:var(--green-deep);">Jam Operasional</div>
+              <p class="text-sm leading-relaxed" style="color:#6b7d73;">Setiap hari · 09.00 – 22.00 WIB<br/>Booking minimal H-1</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3">
+            <span style="color:var(--gold); font-size:1.3rem; margin-top:0.1rem;">📱</span>
+            <div>
+              <div class="font-semibold mb-1" style="color:var(--green-deep);">Hubungi Kami</div>
+              <p class="text-sm leading-relaxed" style="color:#6b7d73;">WhatsApp: +62 822-9468-8823<br/>Respon cepat dalam 1 jam</p>
+            </div>
+          </div>
+        </div>
+        <a href="https://wa.me/6282294688823?text=Halo,%20saya%20ingin%20tanya%20lokasi%20Garden%20Villa%20Pekanbaru" target="_blank" class="btn-primary" style="display:inline-flex;">
+          Tanya Lokasi via WhatsApp
+        </a>
+      </div>
+      <div class="reveal reveal-delay-2">
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127589.67789697987!2d101.37946749999999!3d0.5333424!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d5a9a82bec0af1%3A0x21fd1d73a3e60d13!2sPekanbaru%2C%20Pekanbaru%20City%2C%20Riau!5e0!3m2!1sen!2sid!4v1700000000000!5m2!1sen!2sid"
+            width="100%" height="380" style="border:0; display:block;" allowfullscreen="" loading="lazy">
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FAQ ─── -->
+
+<section id="faq" class="py-20 px-6" style="background:#f0e9de;">
+  <div class="max-w-3xl mx-auto">
+    <div class="text-center mb-14 reveal">
+      <div class="section-label mb-3">FAQ</div>
+      <h2 class="section-title">Questions <em style="font-style:italic; color:var(--green-mid);">Answered</em></h2>
+    </div>
+    <div class="reveal">
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Bagaimana cara booking Garden Villa?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Booking sangat mudah! Cukup klik tombol "Book Now" dan chat langsung via WhatsApp kami. Tim kami akan membantu konfirmasi tanggal, paket, dan detail acara Anda dalam 1 jam.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Berapa kapasitas maksimal tamu?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Paket Basic maks. 8 orang · Paket Private maks. 15 orang · Paket VIP maks. 30 orang. Untuk acara lebih besar, silakan hubungi kami untuk custom package.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Apakah cocok untuk foto & konten media sosial?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Sangat cocok! Garden Villa dirancang dengan banyak spot foto yang instagrammable. Pencahayaan malam hari yang estetik membuat konten Anda standout di Instagram & TikTok.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Apa saja aturan yang perlu diperhatikan?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Jaga kebersihan dan ketenangan. Tidak diperkenankan membawa minuman beralkohol. Harap menjaga tanaman dan properti villa. Musik boleh hingga pukul 21.00 WIB. Hewan peliharaan perlu konfirmasi terlebih dahulu.
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Berapa lama advance booking yang diperlukan?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Minimal H-1 untuk hari kerja. Untuk weekend dan hari libur nasional, kami sarankan booking H-3 agar slot tersedia. Hubungi kami segera untuk cek ketersediaan.
+        </div>
+      </div>
+      <div class="faq-item" style="border-bottom:none;">
+        <button class="faq-btn" onclick="toggleFaq(this)">
+          Apakah ada fasilitas parkir?
+          <span class="faq-icon">+</span>
+        </button>
+        <div class="faq-answer">
+          Ya, tersedia area parkir gratis yang cukup untuk semua paket. Dapat menampung kendaraan roda dua dan roda empat.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FINAL CTA ─── -->
+
+<section class="py-24 px-6" style="background: linear-gradient(135deg, #0f1e16 0%, var(--green-deep) 50%, #1a2e1c 100%); position:relative; overflow:hidden; text-align:center;">
+  <div class="blob-bg" style="width:500px;height:500px;background:var(--green-light);top:-150px;left:50%;transform:translateX(-50%);opacity:0.2;"></div>
+  <div style="position:absolute;inset:0;background-image:radial-gradient(circle at 50% 50%, rgba(201,169,110,0.08) 0%, transparent 70%);"></div>
+  <div class="max-w-3xl mx-auto relative z-10">
+    <div class="reveal">
+      <div class="section-label mb-4" style="color:var(--gold-light);">Ready to Escape?</div>
+      <h2 class="font-display mb-6" style="font-size:clamp(2.5rem,6vw,5rem); font-weight:300; color:white; line-height:1.1;">
+        Your Garden<br/><em style="font-style:italic; color:var(--gold-light);">Awaits You</em>
+      </h2>
+      <p class="mb-10 text-base md:text-lg" style="color:rgba(245,239,230,0.7); max-width:450px; margin:0 auto 2.5rem;">
+        Jangan tunda lagi. Slot terbatas. Hubungi kami sekarang dan wujudkan momen terbaik Anda di Garden Villa Pekanbaru.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="https://wa.me/6282294688823?text=Halo!%20Saya%20ingin%20booking%20Garden%20Villa%20Pekanbaru.%20Bisa%20info%20ketersediaan?" target="_blank" class="btn-primary" style="font-size:1rem; padding:1.1rem 2.5rem; box-shadow: 0 10px 40px rgba(201,169,110,0.5);">
+          <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Book Now via WhatsApp
+        </a>
+        <a href="https://wa.me/6282294688823?text=Saya%20ingin%20tanya%20jadwal%20tersedia%20Garden%20Villa%20Pekanbaru" target="_blank" class="btn-outline">
+          Cek Jadwal Tersedia
+        </a>
+      </div>
+      <p class="mt-8 text-xs" style="color:rgba(245,239,230,0.4);">
+        Respon dalam 1 jam · Tanpa DP awal · Booking mudah via WA
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+
+<footer style="background:#0a140e; color:rgba(245,239,230,0.4);" class="py-8 px-6 text-center">
+  <div class="font-display text-xl mb-2" style="color:rgba(245,239,230,0.7);">Garden Villa Pekanbaru</div>
+  <p class="text-xs mb-4">Escape to Nature · Est. 2024</p>
+  <div class="flex justify-center gap-6 text-xs mb-6">
+    <a href="https://wa.me/6282294688823" target="_blank" style="color:var(--gold-light); text-decoration:none;">WhatsApp</a>
+    <span style="color:rgba(245,239,230,0.2);">·</span>
+    <a href="https://instagram.com" target="_blank" style="color:var(--gold-light); text-decoration:none;">Instagram</a>
+    <span style="color:rgba(245,239,230,0.2);">·</span>
+    <a href="https://tiktok.com" target="_blank" style="color:var(--gold-light); text-decoration:none;">TikTok</a>
+  </div>
+  <p class="text-xs" style="color:rgba(245,239,230,0.2);">© 2024 Garden Villa Pekanbaru. All rights reserved.</p>
+</footer>
+
+<script>
+  // Navbar scroll effect
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 60) navbar.classList.add('scrolled');
+    else navbar.classList.remove('scrolled');
+  });
+
+  // Hero bg parallax hint
+  const heroBg = document.getElementById('heroBg');
+  window.addEventListener('load', () => {
+    setTimeout(() => heroBg.classList.add('loaded'), 100);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // FAQ toggle
+  function toggleFaq(btn) {
+    const answer = btn.nextElementSibling;
+    const icon = btn.querySelector('.faq-icon');
+    const isOpen = answer.classList.contains('open');
+    document.querySelectorAll('.faq-answer').forEach(a => a.classList.remove('open'));
+    document.querySelectorAll('.faq-icon').forEach(i => i.classList.remove('open'));
+    if (!isOpen) { answer.classList.add('open'); icon.classList.add('open'); }
+  }
+</script>
 
 </body>
 </html>
