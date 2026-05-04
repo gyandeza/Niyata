@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Finance Dashboard</title>
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --primary-light: #EEF2FF;
+            --success: #10B981;
+            --success-light: #D1FAE5;
+            --danger: #EF4444;
+            --danger-light: #FEE2E2;
+            --warning: #F59E0B;
+            --warning-light: #FEF3C7;
+            --background: #F3F4F6;
+            --surface: #FFFFFF;
+            --text-main: #111827;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-main);
+            padding: 24px;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        /* Typography */
+        h1, h2, h3 { font-weight: 600; }
+        .text-sm { font-size: 0.875rem; color: var(--text-muted); }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; font-weight: 700; }
+        .text-2xl { font-size: 1.5rem; font-weight: 700; }
+
+        /* Cards */
+        .card {
+            background-color: var(--surface);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border);
+        }
+
+        /* Top Controls Layout */
+        .controls-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        /* Toggle Switch */
+        .switch-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--primary-light);
+            padding: 12px 16px;
+            border-radius: var(--radius);
+            border: 1px solid var(--primary);
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 50px;
+            height: 28px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider-toggle {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 28px;
+        }
+
+        .slider-toggle:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider-toggle {
+            background-color: var(--primary);
+        }
+
+        input:checked + .slider-toggle:before {
+            transform: translateX(22px);
+        }
+
+        /* Income Range Slider */
+        .range-container {
+            flex-grow: 1;
+            min-width: 300px;
+        }
+
+        .range-slider {
+            width: 100%;
+            margin-top: 8px;
+            accent-color: var(--primary);
+        }
+
+        /* Summary Grid */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+
+        .summary-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .amount-green { color: var(--success); }
+        .amount-red { color: var(--danger); }
+        
+        /* Progress Bar */
+        .progress-wrapper {
+            width: 100%;
+            background-color: var(--border);
+            border-radius: 8px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background-color: var(--primary);
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+
+        /* Indicators & Warnings */
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 16px;
+            display: none; /* Hidden by default */
+            font-weight: 500;
+        }
+        
+        .alert-warning {
+            background-color: var(--warning-light);
+            color: #92400E;
+            border: 1px solid var(--warning);
+        }
+
+        .sustainability-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-top: 8px;
+        }
+        .badge-green { background-color: var(--success-light); color: var(--success); }
+        .badge-yellow { background-color: var(--warning-light); color: var(--warning); }
+        .badge-red { background-color: var(--danger-light); color: var(--danger); }
+
+        /* Bonus Allocation Section */
+        .bonus-section {
+            display: none; /* Hidden in Normal Mode */
+            background-color: #F8FAFC;
+            border-left: 4px solid var(--primary);
+        }
+
+        .bonus-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .bonus-card {
+            background: var(--surface);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        /* Expense Lists */
+        .expenses-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .expense-group-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .expense-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .expense-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px;
+            background-color: #F9FAFB;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .expense-item:hover {
+            border-color: var(--primary);
+        }
+
+        .expense-item.highlight {
+            background-color: #FFFBEB;
+            border: 1px solid var(--warning);
+            box-shadow: 0 0 0 1px var(--warning);
+        }
+        
+        .highlight-badge {
+            font-size: 0.7rem;
+            background: var(--warning);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-left: 8px;
+        }
+
+        .expense-item label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            flex-grow: 1;
+        }
+
+        .expense-item input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .item-amount {
+            font-weight: 600;
+            font-family: monospace;
+            font-size: 0.95rem;
+        }
+
+        .sub-header {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin: 12px 0 8px 0;
+        }
+
+        @media (max-width: 768px) {
+            .controls-header { flex-direction: column; align-items: stretch; }
+            .switch-container { justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- Top Controls: Mode & Income -->
+    <div class="card controls-header">
+        <div>
+            <h1>Finance Dashboard</h1>
+            <p class="text-sm">Manage monthly budgeting vs actual expenses</p>
+        </div>
+        
+        <div class="switch-container">
+            <div>
+                <div class="text-sm">Income Mode</div>
+                <div id="mode-label" style="font-weight: 600;">Bonus Mode</div>
+            </div>
+            <label class="switch">
+                <input type="checkbox" id="mode-toggle" checked>
+                <span class="slider-toggle"></span>
+            </label>
+        </div>
+
+        <div class="range-container">
+            <div style="display: flex; justify-content: space-between;">
+                <label for="income-slider" class="text-sm">Adjust Monthly Income</label>
+                <span id="income-display" class="text-lg" style="font-weight: 600;"></span>
+            </div>
+            <input type="range" id="income-slider" class="range-slider" min="10000000" max="60000000" step="100000">
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="summary-grid">
+        <div class="card summary-card">
+            <div class="text-sm">Total Income</div>
+            <div id="total-income" class="text-2xl">Rp 0</div>
+        </div>
+        <div class="card summary-card">
+            <div class="text-sm">Total Selected Expenses</div>
+            <div id="total-expenses" class="text-2xl">Rp 0</div>
+            <div>
+                <div style="display: flex; justify-content: space-between;" class="text-sm mt-2">
+                    <span>Income Spent</span>
+                    <span id="spent-percentage">0%</span>
+                </div>
+                <div class="progress-wrapper">
+                    <div id="spent-progress" class="progress-fill" style="width: 0%;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="card summary-card">
+            <div class="text-sm">Remaining Balance</div>
+            <div id="remaining-balance" class="text-2xl">Rp 0</div>
+            <div id="sustainability-indicator" class="sustainability-badge">Sustainability</div>
+        </div>
+    </div>
+
+    <!-- Smart Warning -->
+    <div id="smart-warning" class="alert alert-warning">
+        ⚠️ <strong>Smart Warning:</strong> Your expenses exceed your normal monthly income (Rp 13.200.000). This may not be sustainable next month.
+    </div>
+
+    <!-- Bonus Allocation (Conditional) -->
+    <div id="bonus-section" class="card bonus-section">
+        <h2>💰 Bonus Allocation Breakdown</h2>
+        <p class="text-sm">Since income exceeds base living (Rp 13.200.000), here is your suggested bonus split:</p>
+        
+        <div style="display: flex; gap: 24px; margin-top: 12px; flex-wrap: wrap;">
+            <div><span class="text-sm">Base Living:</span> <strong>Rp 13.200.000</strong></div>
+            <div><span class="text-sm">Remaining Bonus:</span> <strong id="remaining-bonus">Rp 0</strong></div>
+        </div>
+
+        <div class="bonus-grid">
+            <div class="bonus-card">
+                <div class="text-sm">Saving (40%)</div>
+                <div id="bonus-saving" class="text-lg" style="color: var(--primary); font-weight: 600;">Rp 0</div>
+            </div>
+            <div class="bonus-card">
+                <div class="text-sm">Investment (30%)</div>
+                <div id="bonus-investment" class="text-lg" style="color: var(--success); font-weight: 600;">Rp 0</div>
+            </div>
+            <div class="bonus-card">
+                <div class="text-sm">Debt Payment (20%)</div>
+                <div id="bonus-debt" class="text-lg" style="color: var(--danger); font-weight: 600;">Rp 0</div>
+            </div>
+            <div class="bonus-card">
+                <div class="text-sm">Lifestyle (10%)</div>
+                <div id="bonus-lifestyle" class="text-lg" style="color: var(--warning); font-weight: 600;">Rp 0</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expenses List -->
+    <div class="expenses-container">
+        
+        <!-- Routine Expenses -->
+        <div class="card">
+            <div class="expense-group-header">
+                <h2>🧾 Routine</h2>
+                <div id="subtotal-routine" class="text-lg" style="font-weight: 600;">Rp 0</div>
+            </div>
+            <div id="list-routine" class="expense-list">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Actual Expenses -->
+        <div class="card">
+            <div class="expense-group-header">
+                <h2>📤 Actual</h2>
+                <div id="subtotal-actual" class="text-lg" style="font-weight: 600;">Rp 0</div>
+            </div>
+            <div id="list-actual" class="expense-list">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+        <!-- Planned Expenses -->
+        <div class="card">
+            <div class="expense-group-header">
+                <h2>📋 Planned</h2>
+                <div id="subtotal-planned" class="text-lg" style="font-weight: 600;">Rp 0</div>
+            </div>
+            <div id="list-planned" class="expense-list">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+    // --- Configuration & Data ---
+    const NORMAL_INCOME = 13200000;
+    const BONUS_INCOME = 43323000;
+
+    const data = {
+        routine: {
+            cicilan: [
+                { id: 'r1', name: 'Infrm', amount: 165000, checked: true },
+                { id: 'r2', name: 'SIV', amount: 120000, checked: true },
+                { id: 'r3', name: 'CC', amount: 250000, checked: true },
+                { id: 'r4', name: 'Kopkar', amount: 2000000, checked: true },
+                { id: 'r5', name: 'Rumah', amount: 3350000, checked: true },
+                { id: 'r6', name: 'Buffer', amount: 55000, checked: true }
+            ],
+            kebutuhan: [
+                { id: 'r7', name: 'WiFi', amount: 272000, checked: true },
+                { id: 'r8', name: 'iCloud', amount: 50000, checked: true },
+                { id: 'r9', name: 'Microsoft', amount: 43000, checked: true },
+                { id: 'r10', name: 'Pulsa', amount: 200000, checked: true },
+                { id: 'r11', name: 'Bensin Motor', amount: 50000, checked: true },
+                { id: 'r12', name: 'Bensin Mobil', amount: 1250000, checked: true },
+                { id: 'r13', name: 'Tabungan Pajak Mobil', amount: 200000, checked: true },
+                { id: 'r14', name: 'Tabungan Servis Mobil', amount: 300000, checked: true },
+                { id: 'r15', name: 'Belanja Bulanan', amount: 500000, checked: true },
+                { id: 'r16', name: 'Beras', amount: 350000, checked: true },
+                { id: 'r17', name: 'Belanja Dapur', amount: 1500000, checked: true },
+                { id: 'r18', name: 'Buah', amount: 300000, checked: true },
+                { id: 'r19', name: 'Galon', amount: 209000, checked: true },
+                { id: 'r20', name: 'Ceisya', amount: 1000000, checked: true },
+                { id: 'r21', name: 'Weekend Kerinci', amount: 400000, checked: true },
+                { id: 'r22', name: 'Weekend PKU-BKN', amount: 800000, checked: true }
+            ]
+        },
+        actual: [
+            { id: 'a1', name: 'Ceisya', amount: 11050000, checked: false },
+            { id: 'a2', name: 'Sumbar', amount: 3000000, checked: false },
+            { id: 'a3', name: 'Shopee', amount: 4255000, checked: false },
+            { id: 'a4', name: 'Utang', amount: 1000000, checked: false }
+        ],
+        planned: [
+            { id: 'p1', name: 'Insinyur', amount: 2500000, checked: false },
+            { id: 'p2', name: 'Pajak Mobil', amount: 1800000, checked: false },
+            { id: 'p3', name: 'Tambahan Terali', amount: 1000000, checked: false },
+            { id: 'p4', name: 'Servis Mobil (Utang Nenek)', amount: 570000, checked: false },
+            { id: 'p5', name: 'CC (Utang Nenek)', amount: 250000, checked: false },
+            { id: 'p6', name: 'Pengeluaran April (Utang Nenek)', amount: 672000, checked: false },
+            { id: 'p7', name: 'Hotel (Utang Nenek)', amount: 508000, checked: false },
+            { id: 'p8', name: 'Pengeluaran s/d Gajian', amount: 12500000, checked: false },
+            { id: 'p9', name: 'Shopee Juni', amount: 2111000, checked: false },
+            { id: 'p10', name: 'Kredivo', amount: 1072000, checked: false },
+            { id: 'p11', name: 'Paspor', amount: 1000000, checked: false },
+            { id: 'p12', name: 'Lemari', amount: 843000, checked: false }
+        ]
+    };
+
+    // --- Formatters ---
+    const formatIDR = (number) => {
+        return new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
+        }).format(number);
+    };
+
+    // --- DOM Elements ---
+    const dom = {
+        modeToggle: document.getElementById('mode-toggle'),
+        modeLabel: document.getElementById('mode-label'),
+        incomeSlider: document.getElementById('income-slider'),
+        incomeDisplay: document.getElementById('income-display'),
+        
+        totalIncome: document.getElementById('total-income'),
+        totalExpenses: document.getElementById('total-expenses'),
+        remainingBalance: document.getElementById('remaining-balance'),
+        
+        spentPercentage: document.getElementById('spent-percentage'),
+        spentProgress: document.getElementById('spent-progress'),
+        sustainabilityIndicator: document.getElementById('sustainability-indicator'),
+        smartWarning: document.getElementById('smart-warning'),
+        
+        bonusSection: document.getElementById('bonus-section'),
+        remainingBonus: document.getElementById('remaining-bonus'),
+        bonusSaving: document.getElementById('bonus-saving'),
+        bonusInvestment: document.getElementById('bonus-investment'),
+        bonusDebt: document.getElementById('bonus-debt'),
+        bonusLifestyle: document.getElementById('bonus-lifestyle'),
+        
+        listRoutine: document.getElementById('list-routine'),
+        listActual: document.getElementById('list-actual'),
+        listPlanned: document.getElementById('list-planned'),
+        
+        subRoutine: document.getElementById('subtotal-routine'),
+        subActual: document.getElementById('subtotal-actual'),
+        subPlanned: document.getElementById('subtotal-planned')
+    };
+
+    // Flat list reference for easy updates
+    const allExpensesMap = new Map(); 
+
+    // --- Initialization & Rendering ---
+    function createExpenseHTML(item) {
+        allExpensesMap.set(item.id, item);
+        return `
+            <div class="expense-item" id="item-${item.id}">
+                <label>
+                    <input type="checkbox" id="${item.id}" ${item.checked ? 'checked' : ''} onchange="handleCheckboxChange('${item.id}', this.checked)">
+                    <span>${item.name}</span>
+                </label>
+                <div class="item-amount">${formatIDR(item.amount)}</div>
+            </div>
+        `;
+    }
+
+    function renderLists() {
+        // Routine
+        let routineHTML = `<div class="sub-header">Cicilan</div>`;
+        data.routine.cicilan.forEach(item => routineHTML += createExpenseHTML(item));
+        routineHTML += `<div class="sub-header">Kebutuhan</div>`;
+        data.routine.kebutuhan.forEach(item => routineHTML += createExpenseHTML(item));
+        dom.listRoutine.innerHTML = routineHTML;
+
+        // Actual
+        let actualHTML = '';
+        data.actual.forEach(item => actualHTML += createExpenseHTML(item));
+        dom.listActual.innerHTML = actualHTML;
+
+        // Planned
+        let plannedHTML = '';
+        data.planned.forEach(item => plannedHTML += createExpenseHTML(item));
+        dom.listPlanned.innerHTML = plannedHTML;
+    }
+
+    // --- Core Logic & Calculations ---
+    function handleCheckboxChange(id, isChecked) {
+        allExpensesMap.get(id).checked = isChecked;
+        updateDashboard();
+    }
+
+    function calculateCategoryTotal(itemsArray) {
+        return itemsArray.reduce((sum, item) => item.checked ? sum + item.amount : sum, 0);
+    }
+
+    function updateDashboard() {
+        const currentIncome = parseInt(dom.incomeSlider.value);
+        
+        // Update Income Displays
+        dom.incomeDisplay.textContent = formatIDR(currentIncome);
+        dom.totalIncome.textContent = formatIDR(currentIncome);
+
+        // Calculate Subtotals
+        const subRoutine = calculateCategoryTotal(data.routine.cicilan) + calculateCategoryTotal(data.routine.kebutuhan);
+        const subActual = calculateCategoryTotal(data.actual);
+        const subPlanned = calculateCategoryTotal(data.planned);
+
+        dom.subRoutine.textContent = formatIDR(subRoutine);
+        dom.subActual.textContent = formatIDR(subActual);
+        dom.subPlanned.textContent = formatIDR(subPlanned);
+
+        // Calculate Totals
+        const totalSelectedExpenses = subRoutine + subActual + subPlanned;
+        const remaining = currentIncome - totalSelectedExpenses;
+
+        dom.totalExpenses.textContent = formatIDR(totalSelectedExpenses);
+        
+        // Remaining Balance Colors
+        dom.remainingBalance.textContent = formatIDR(remaining);
+        dom.remainingBalance.className = `text-2xl ${remaining >= 0 ? 'amount-green' : 'amount-red'}`;
+
+        // Progress Bar
+        const percentSpent = Math.min((totalSelectedExpenses / currentIncome) * 100, 100).toFixed(1);
+        dom.spentPercentage.textContent = `${percentSpent}%`;
+        dom.spentProgress.style.width = `${percentSpent}%`;
+        
+        if (percentSpent > 90) dom.spentProgress.style.backgroundColor = 'var(--danger)';
+        else if (percentSpent > 75) dom.spentProgress.style.backgroundColor = 'var(--warning)';
+        else dom.spentProgress.style.backgroundColor = 'var(--primary)';
+
+        // Sustainability & Warning
+        if (totalSelectedExpenses <= NORMAL_INCOME) {
+            dom.sustainabilityIndicator.textContent = '🟢 Sustainable';
+            dom.sustainabilityIndicator.className = 'sustainability-badge badge-green';
+            dom.smartWarning.style.display = 'none';
+        } else if (totalSelectedExpenses <= 20000000) {
+            dom.sustainabilityIndicator.textContent = '🟡 Moderate Risk';
+            dom.sustainabilityIndicator.className = 'sustainability-badge badge-yellow';
+            dom.smartWarning.style.display = 'block';
+        } else {
+            dom.sustainabilityIndicator.textContent = '🔴 High Risk (Temporary)';
+            dom.sustainabilityIndicator.className = 'sustainability-badge badge-red';
+            dom.smartWarning.style.display = 'block';
+        }
+
+        // Bonus Allocation Logic
+        if (dom.modeToggle.checked) {
+            dom.bonusSection.style.display = 'block';
+            const bonusRemaining = Math.max(0, currentIncome - NORMAL_INCOME);
+            dom.remainingBonus.textContent = formatIDR(bonusRemaining);
+            
+            dom.bonusSaving.textContent = formatIDR(bonusRemaining * 0.40);
+            dom.bonusInvestment.textContent = formatIDR(bonusRemaining * 0.30);
+            dom.bonusDebt.textContent = formatIDR(bonusRemaining * 0.20);
+            dom.bonusLifestyle.textContent = formatIDR(bonusRemaining * 0.10);
+        } else {
+            dom.bonusSection.style.display = 'none';
+        }
+
+        // Highlight Biggest Selected Expense
+        highlightBiggestExpense();
+    }
+
+    function highlightBiggestExpense() {
+        // Clear old highlights
+        document.querySelectorAll('.expense-item').forEach(el => {
+            el.classList.remove('highlight');
+            const badge = el.querySelector('.highlight-badge');
+            if (badge) badge.remove();
+        });
+
+        let maxAmount = 0;
+        let maxId = null;
+
+        allExpensesMap.forEach((item, id) => {
+            if (item.checked && item.amount > maxAmount) {
+                maxAmount = item.amount;
+                maxId = id;
+            }
+        });
+
+        if (maxId) {
+            const el = document.getElementById(`item-${maxId}`);
+            if (el) {
+                el.classList.add('highlight');
+                const label = el.querySelector('label');
+                const badge = document.createElement('span');
+                badge.className = 'highlight-badge';
+                badge.textContent = 'Biggest';
+                label.appendChild(badge);
+            }
+        }
+    }
+
+    // --- Event Listeners ---
+    dom.modeToggle.addEventListener('change', (e) => {
+        const isBonus = e.target.checked;
+        dom.modeLabel.textContent = isBonus ? 'Bonus Mode' : 'Normal Mode';
+        dom.incomeSlider.value = isBonus ? BONUS_INCOME : NORMAL_INCOME;
+        updateDashboard();
+    });
+
+    dom.incomeSlider.addEventListener('input', () => {
+        // Auto uncheck mode toggle if manually changed
+        const currentVal = parseInt(dom.incomeSlider.value);
+        if (currentVal !== BONUS_INCOME && dom.modeToggle.checked) {
+            dom.modeToggle.checked = false;
+            dom.modeLabel.textContent = 'Custom Mode';
+        } else if (currentVal === BONUS_INCOME) {
+            dom.modeToggle.checked = true;
+            dom.modeLabel.textContent = 'Bonus Mode';
+        } else if (currentVal === NORMAL_INCOME) {
+            dom.modeLabel.textContent = 'Normal Mode';
+        } else {
+            dom.modeLabel.textContent = 'Custom Mode';
+        }
+        updateDashboard();
+    });
+
+    // --- Boot ---
+    dom.incomeSlider.value = BONUS_INCOME; // Set default
+    renderLists();
+    updateDashboard();
+
+</script>
+</body>
+</html>
