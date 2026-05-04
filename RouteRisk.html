@@ -245,40 +245,38 @@ padding:.28rem .82rem;border-radius:100px;margin-bottom:1.85rem}
 .rh-sub{font-size:.62rem;color:var(–gray-lt);margin-top:2px;font-weight:300}
 .rh-right{display:flex;align-items:center;gap:.48rem;flex-wrap:wrap}
 
-/* MAP EMBED — fixed for Leaflet correctness */
+/* MAP EMBED — scoped fixes, no global side effects */
 .map-wrap{
 background:#fff;
 border:1px solid var(–border);
 border-radius:var(–r);
-/* DO NOT use overflow:hidden — it breaks Leaflet tile edge rendering */
-position:relative;
-/* Clip to border-radius without overflow:hidden by using clip-path instead */
-clip-path:inset(0 round var(–r));
+overflow:hidden;           /* safe here: wraps the map, not the popup layer */
+position:relative;         /* needed for absolute overlay + toggle button */
+isolation:isolate;         /* creates own stacking context, no z-index leaks */
 }
 #demo-map{
-display:block;          /* prevent inline-block collapse */
+display:block;             /* prevent inline collapse */
 width:100%;
-height:400px;           /* explicit px height — Leaflet requires this */
+height:400px;              /* Leaflet needs explicit px height */
 min-height:300px;
 background:var(–bg2);
-position:relative;
-z-index:1;              /* base layer for tiles */
+/* NO position/z-index here — would create stacking context and fight nav */
 }
-/* Leaflet internal z-index corrections */
-.leaflet-pane         { z-index: 4 !important; }
-.leaflet-tile-pane    { z-index: 2 !important; }
-.leaflet-overlay-pane { z-index: 5 !important; }
-.leaflet-marker-pane  { z-index: 6 !important; }
-.leaflet-tooltip-pane { z-index: 7 !important; }
-.leaflet-popup-pane   { z-index: 8 !important; }
-.leaflet-control      { z-index: 9 !important; }
+/* Leaflet z-index corrections — scoped to inside .map-wrap only */
+.map-wrap .leaflet-pane         { z-index: 400; }
+.map-wrap .leaflet-tile-pane    { z-index: 200; }
+.map-wrap .leaflet-overlay-pane { z-index: 400; }
+.map-wrap .leaflet-marker-pane  { z-index: 600; }
+.map-wrap .leaflet-tooltip-pane { z-index: 650; }
+.map-wrap .leaflet-popup-pane   { z-index: 700; }
+.map-wrap .leaflet-control      { z-index: 800; }
 
 .map-overlay{
 position:absolute;inset:0;
 display:flex;flex-direction:column;
 align-items:center;justify-content:center;
 background:var(–bg);color:var(–gray-lt);
-z-index:20;             /* above Leaflet controls while loading */
+z-index:900;               /* above all Leaflet panes inside this context */
 transition:opacity .35s,visibility .35s;
 pointer-events:none;
 gap:.45rem;font-size:.8rem;font-weight:300;text-align:center;line-height:1.62;
@@ -288,7 +286,7 @@ visibility:visible;opacity:1;
 .mo-icon{font-size:1.65rem;opacity:.28;margin-bottom:.22rem}
 .map-toggle{
 position:absolute;top:.72rem;right:.72rem;
-z-index:15;             /* above Leaflet controls */
+z-index:850;
 background:rgba(255,255,255,.95);
 border:1px solid var(–border);border-radius:100px;
 padding:.32rem .8rem;
