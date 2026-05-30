@@ -3,190 +3,293 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="RouteRisk is an enterprise-ready logistics intelligence platform for predicting route delays, weather disruption, and dispatch risk across Indonesia." />
-  <title>RouteRisk — Logistics Risk Intelligence for Enterprise Fleets</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <title>Niyata - Route Risk Assessment and Industrial Operations Intelligence</title>
+  <meta name="description" content="Niyata is a premium B2B intelligence platform for route risk assessment, forestry logistics, plantation logistics, industrial transportation, and operational risk management." />
+  <meta name="keywords" content="route risk assessment, forestry logistics, plantation logistics, industrial transportation, operational risk management, supply chain visibility" />
+  <link rel="canonical" href="https://gyandeza.github.io/Niyata/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://gyandeza.github.io/Niyata/" />
+  <meta property="og:title" content="Niyata - Operational Intelligence for Industrial Logistics" />
+  <meta property="og:description" content="Route risk assessment, forestry logistics, plantation operations, and industrial transportation intelligence for enterprise teams." />
+  <meta property="og:image" content="https://gyandeza.github.io/Niyata/og-niyata.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Niyata - Operational Intelligence for Industrial Logistics" />
+  <meta name="twitter:description" content="Premium B2B intelligence for route risk, fleet optimization, and operational visibility." />
+  <meta name="twitter:image" content="https://gyandeza.github.io/Niyata/og-niyata.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['Plus Jakarta Sans', 'Inter', 'ui-sans-serif', 'system-ui']
+            sans: ["Plus Jakarta Sans", "Inter", "ui-sans-serif", "system-ui"]
           },
           colors: {
-            ink: '#07111f',
-            muted: '#667085',
-            line: '#dfe5ee',
-            cloud: '#f6f8fb',
-            brand: {
-              50: '#eef8f5',
-              100: '#d8f0e9',
-              500: '#0f8f72',
-              600: '#08745f',
-              700: '#075f50',
-              900: '#073d37'
-            },
-            signal: {
-              green: '#13a36f',
-              amber: '#d79722',
-              red: '#d04747',
-              blue: '#3b82f6'
+            niyata: {
+              ink: "#07111f",
+              navy: "#0b1c2c",
+              slate: "#465466",
+              muted: "#667085",
+              line: "#d9e1ea",
+              cloud: "#f5f8fb",
+              mint: "#ecf8f3",
+              green: "#0e8f70",
+              greenDark: "#07634f",
+              amber: "#d99722",
+              red: "#d64d4d",
+              blue: "#3577f0"
             }
           },
           boxShadow: {
-            soft: '0 18px 60px rgba(8, 25, 45, 0.10)',
-            card: '0 10px 32px rgba(8, 25, 45, 0.08)',
-            glow: '0 0 0 1px rgba(255,255,255,.12), 0 28px 90px rgba(15,143,114,.26)'
+            panel: "0 18px 55px rgba(7,17,31,0.10)",
+            lift: "0 28px 90px rgba(7,17,31,0.16)",
+            glow: "0 0 0 1px rgba(255,255,255,.10), 0 28px 90px rgba(14,143,112,.22)"
           },
           backgroundImage: {
-            mesh: 'radial-gradient(circle at 12% 18%, rgba(15,143,114,.20), transparent 28%), radial-gradient(circle at 88% 8%, rgba(59,130,246,.16), transparent 24%), radial-gradient(circle at 50% 92%, rgba(215,151,34,.13), transparent 28%), linear-gradient(135deg, #07111f 0%, #0b1f2d 48%, #073d37 100%)'
+            heroGrid: "radial-gradient(circle at 12% 10%, rgba(14,143,112,.22), transparent 28%), radial-gradient(circle at 88% 12%, rgba(53,119,240,.18), transparent 28%), radial-gradient(circle at 48% 92%, rgba(217,151,34,.14), transparent 26%), linear-gradient(135deg, #07111f 0%, #0b1c2c 46%, #063f36 100%)"
           }
         }
       }
     };
   </script>
   <style>
-    body { font-family: "Plus Jakarta Sans", system-ui, sans-serif; }
-    .noise {
+    :root {
+      --radius-sm: 14px;
+      --radius-md: 22px;
+      --radius-lg: 34px;
+      --shadow-panel: 0 18px 55px rgba(7,17,31,0.10);
+      --ease-premium: cubic-bezier(.2,.8,.2,1);
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: "Plus Jakarta Sans", system-ui, sans-serif;
+      text-rendering: geometricPrecision;
+      -webkit-font-smoothing: antialiased;
+      background: #ffffff;
+      color: #07111f;
+    }
+    .grid-noise {
       background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
       background-size: 44px 44px;
     }
-    .fade-in { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
-    .fade-in.is-visible { opacity: 1; transform: translateY(0); }
-    .route-line {
-      stroke-dasharray: 8 10;
-      animation: dash 18s linear infinite;
+    .surface {
+      border: 1px solid rgba(217,225,234,.92);
+      background: rgba(255,255,255,.90);
+      box-shadow: var(--shadow-panel);
     }
-    @keyframes dash { to { stroke-dashoffset: -360; } }
+    .fade-up {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .7s var(--ease-premium), transform .7s var(--ease-premium);
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .route-dash {
+      stroke-dasharray: 10 12;
+      animation: routeDash 18s linear infinite;
+    }
+    @keyframes routeDash {
+      to { stroke-dashoffset: -420; }
+    }
     @media (prefers-reduced-motion: reduce) {
-      .fade-in, .route-line, * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+      *, .fade-up, .route-dash {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+      }
     }
   </style>
-</head>
-<body class="bg-white text-ink antialiased">
-  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-semibold focus:text-ink">Skip to content</a>
 
-  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-ink/76 backdrop-blur-xl">
+  <!-- Analytics placeholders: replace IDs before production.
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXX');
+  </script>
+
+  <script>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-XXXXXXX');
+  </script>
+
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window, document, "clarity", "script", "CLARITY_ID");
+  </script>
+
+  <script>
+    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+    n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}
+    (window, document,'script','https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'META_PIXEL_ID');
+    fbq('track', 'PageView');
+  </script>
+  -->
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "Niyata",
+      "url": "https://gyandeza.github.io/Niyata/",
+      "description": "Operational intelligence platform for route risk assessment, forestry logistics, plantation operations, and industrial transportation.",
+      "areaServed": "Indonesia",
+      "knowsAbout": [
+        "route risk assessment",
+        "forestry logistics",
+        "plantation logistics",
+        "industrial transportation",
+        "operational risk management",
+        "supply chain visibility"
+      ],
+      "offers": {
+        "@type": "Offer",
+        "name": "Enterprise Operations Intelligence Pilot",
+        "category": "B2B SaaS"
+      }
+    }
+  </script>
+</head>
+<body class="bg-white text-niyata-ink">
+  <a href="#main" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-full focus:bg-white focus:px-4 focus:py-2 focus:text-sm focus:font-bold focus:text-niyata-ink">Skip to main content</a>
+
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-niyata-ink/82 backdrop-blur-xl">
     <nav class="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 lg:px-8" aria-label="Primary navigation">
-      <a href="#top" class="flex items-center gap-3 text-white" aria-label="RouteRisk homepage">
-        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-sm font-extrabold text-ink shadow-sm">R</span>
-        <span class="text-sm font-bold tracking-tight">RouteRisk</span>
+      <a href="#top" class="flex items-center gap-3 text-white" aria-label="Niyata homepage" data-track="nav_logo">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white text-sm font-extrabold text-niyata-ink shadow-sm">N</span>
+        <span class="text-sm font-extrabold tracking-tight">Niyata</span>
       </a>
-      <div class="hidden items-center gap-8 md:flex">
-        <a href="#platform" class="text-sm font-medium text-white/70 hover:text-white">Platform</a>
-        <a href="#benefits" class="text-sm font-medium text-white/70 hover:text-white">Benefits</a>
-        <a href="#enterprise" class="text-sm font-medium text-white/70 hover:text-white">Enterprise</a>
-        <a href="#contact" class="text-sm font-medium text-white/70 hover:text-white">Contact</a>
+      <div class="hidden items-center gap-7 lg:flex">
+        <a href="#capabilities" class="text-sm font-semibold text-white/68 transition hover:text-white">Capabilities</a>
+        <a href="#routerisk" class="text-sm font-semibold text-white/68 transition hover:text-white">RouteRisk</a>
+        <a href="#case-studies" class="text-sm font-semibold text-white/68 transition hover:text-white">Case Studies</a>
+        <a href="#methodology" class="text-sm font-semibold text-white/68 transition hover:text-white">Methodology</a>
+        <a href="#contact" class="text-sm font-semibold text-white/68 transition hover:text-white">Contact</a>
       </div>
       <div class="hidden items-center gap-3 md:flex">
-        <a href="#demo" class="rounded-full px-4 py-2 text-sm font-semibold text-white/80 hover:text-white">View demo</a>
-        <a href="#contact" class="rounded-full bg-white px-5 py-2.5 text-sm font-bold text-ink shadow-sm transition hover:bg-brand-50">Book consultation</a>
+        <a href="#demo" class="rounded-full px-4 py-2 text-sm font-bold text-white/78 transition hover:text-white" data-track="nav_demo">Try calculator</a>
+        <a href="#contact" class="rounded-full bg-white px-5 py-2.5 text-sm font-extrabold text-niyata-ink shadow-sm transition hover:-translate-y-0.5 hover:bg-niyata-mint" data-track="nav_contact">Book enterprise pilot</a>
       </div>
-      <button id="menuButton" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white md:hidden" aria-label="Open menu" aria-expanded="false">
-        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      <button id="menuButton" class="inline-flex h-10 w-10 items-center justify-center rounded-xl border border-white/15 text-white md:hidden" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobileMenu">
+        <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </nav>
-    <div id="mobileMenu" class="hidden border-t border-white/10 bg-ink px-5 py-4 md:hidden">
+    <div id="mobileMenu" class="hidden border-t border-white/10 bg-niyata-ink px-5 py-4 md:hidden">
       <div class="grid gap-2">
-        <a href="#platform" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/80">Platform</a>
-        <a href="#benefits" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/80">Benefits</a>
-        <a href="#enterprise" class="rounded-xl px-3 py-3 text-sm font-semibold text-white/80">Enterprise</a>
-        <a href="#contact" class="rounded-xl bg-white px-3 py-3 text-center text-sm font-bold text-ink">Book consultation</a>
+        <a href="#capabilities" class="rounded-xl px-3 py-3 text-sm font-bold text-white/80">Capabilities</a>
+        <a href="#routerisk" class="rounded-xl px-3 py-3 text-sm font-bold text-white/80">RouteRisk</a>
+        <a href="#case-studies" class="rounded-xl px-3 py-3 text-sm font-bold text-white/80">Case Studies</a>
+        <a href="#methodology" class="rounded-xl px-3 py-3 text-sm font-bold text-white/80">Methodology</a>
+        <a href="#contact" class="rounded-xl bg-white px-3 py-3 text-center text-sm font-extrabold text-niyata-ink">Book enterprise pilot</a>
       </div>
     </div>
   </header>
 
   <main id="main">
-    <section id="top" class="relative isolate min-h-screen overflow-hidden bg-mesh pt-28 text-white">
-      <div class="noise absolute inset-0 opacity-70"></div>
-      <div class="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-white to-transparent"></div>
-      <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-24 pt-12 lg:grid-cols-[1.02fr_.98fr] lg:px-8 lg:pb-32">
-        <div class="fade-in">
-          <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/8 px-3 py-1.5 text-xs font-bold text-white/78 shadow-glow">
-            <span class="h-2 w-2 rounded-full bg-brand-500"></span>
-            Enterprise logistics intelligence for Indonesia
+    <section id="top" class="relative isolate min-h-screen overflow-hidden bg-heroGrid pt-28 text-white">
+      <div class="grid-noise absolute inset-0 opacity-70"></div>
+      <div class="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-t from-white to-transparent"></div>
+      <div class="relative mx-auto grid max-w-7xl items-center gap-14 px-5 pb-24 pt-10 lg:grid-cols-[1.02fr_.98fr] lg:px-8 lg:pb-32">
+        <div class="fade-up">
+          <div class="mb-7 inline-flex items-center gap-2 rounded-full border border-white/14 bg-white/8 px-3 py-1.5 text-xs font-extrabold text-white/78 shadow-glow">
+            <span class="h-2 w-2 rounded-full bg-niyata-green"></span>
+            Industrial intelligence for route, fleet, and field operations
           </div>
-          <h1 class="max-w-4xl text-5xl font-extrabold leading-[1.02] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
-            Predict route disruption before your fleet leaves the depot.
+          <h1 class="max-w-5xl text-5xl font-extrabold leading-[1.02] tracking-[-0.045em] sm:text-6xl lg:text-7xl">
+            Turn operational uncertainty into decisions your enterprise can trust.
           </h1>
           <p class="mt-7 max-w-2xl text-lg leading-8 text-white/72">
-            RouteRisk converts weather, traffic, road quality, port congestion, and seasonal demand signals into dispatch decisions your operations team can trust.
+            Niyata helps forestry, plantation, logistics, and industrial teams predict route risk, improve fleet utilization, and manage field operations with enterprise-grade intelligence.
           </p>
           <div class="mt-9 flex flex-col gap-3 sm:flex-row">
-            <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 text-sm font-extrabold text-ink shadow-soft transition hover:-translate-y-0.5 hover:bg-brand-50">
-              Book enterprise demo
-              <svg class="ml-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+            <a href="#contact" class="inline-flex items-center justify-center rounded-full bg-white px-6 py-4 text-sm font-extrabold text-niyata-ink shadow-panel transition hover:-translate-y-0.5 hover:bg-niyata-mint" data-track="hero_primary_cta">
+              Book enterprise pilot
+              <svg class="ml-2 h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
             </a>
-            <a href="#demo" class="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/8 px-6 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/14">
-              Explore product preview
+            <a href="#demo" class="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/8 px-6 py-4 text-sm font-bold text-white transition hover:-translate-y-0.5 hover:bg-white/14" data-track="hero_secondary_cta">
+              Try RouteRisk calculator
             </a>
           </div>
           <div class="mt-10 grid max-w-2xl grid-cols-3 gap-4 border-t border-white/12 pt-7">
             <div>
-              <p class="text-2xl font-extrabold tracking-tight">72h</p>
-              <p class="mt-1 text-xs font-medium leading-5 text-white/58">forecast window</p>
+              <p class="text-2xl font-extrabold tracking-tight">35%</p>
+              <p class="mt-1 text-xs font-semibold leading-5 text-white/58">lower truck waiting time in pilot model</p>
             </div>
             <div>
-              <p class="text-2xl font-extrabold tracking-tight">0-100</p>
-              <p class="mt-1 text-xs font-medium leading-5 text-white/58">risk scoring</p>
+              <p class="text-2xl font-extrabold tracking-tight">28%</p>
+              <p class="mt-1 text-xs font-semibold leading-5 text-white/58">incident reduction target for high-risk routes</p>
             </div>
             <div>
-              <p class="text-2xl font-extrabold tracking-tight">4 modes</p>
-              <p class="mt-1 text-xs font-medium leading-5 text-white/58">land, sea, hybrid, air</p>
+              <p class="text-2xl font-extrabold tracking-tight">18%</p>
+              <p class="mt-1 text-xs font-semibold leading-5 text-white/58">fleet utilization improvement scenario</p>
             </div>
           </div>
         </div>
 
-        <div id="demo" class="fade-in rounded-[2rem] border border-white/14 bg-white/10 p-3 shadow-glow backdrop-blur">
-          <div class="overflow-hidden rounded-[1.45rem] bg-white text-ink shadow-soft">
-            <div class="flex items-center justify-between border-b border-line bg-cloud px-5 py-4">
+        <div class="fade-up rounded-[2rem] border border-white/14 bg-white/10 p-3 shadow-glow backdrop-blur">
+          <div class="overflow-hidden rounded-[1.45rem] bg-white text-niyata-ink shadow-panel">
+            <div class="flex items-center justify-between border-b border-niyata-line bg-niyata-cloud px-5 py-4">
               <div>
-                <p class="text-xs font-extrabold uppercase tracking-[.22em] text-muted">RouteRisk Command</p>
-                <p class="mt-1 text-sm font-bold">Live dispatch intelligence</p>
+                <p class="text-xs font-extrabold uppercase tracking-[.22em] text-niyata-muted">Niyata Control Room</p>
+                <p class="mt-1 text-sm font-bold">Operational risk intelligence</p>
               </div>
-              <span class="rounded-full bg-brand-100 px-3 py-1 text-xs font-extrabold text-brand-700">Live model</span>
+              <span class="rounded-full bg-niyata-mint px-3 py-1 text-xs font-extrabold text-niyata-greenDark">Live preview</span>
             </div>
             <div class="grid gap-4 p-5">
               <div class="grid gap-3 sm:grid-cols-3">
-                <div class="rounded-2xl border border-line bg-white p-4">
-                  <p class="text-xs font-bold text-muted">Jakarta → Surabaya</p>
-                  <p class="mt-4 text-4xl font-extrabold tracking-tight text-brand-600">24</p>
-                  <p class="mt-2 text-xs font-extrabold uppercase tracking-[.16em] text-brand-600">Low risk</p>
+                <div class="rounded-2xl border border-niyata-line p-4">
+                  <p class="text-xs font-bold text-niyata-muted">RouteRisk Score</p>
+                  <p class="mt-4 text-4xl font-extrabold tracking-tight text-niyata-green">24</p>
+                  <p class="mt-2 text-xs font-extrabold uppercase tracking-[.16em] text-niyata-green">Low risk</p>
                 </div>
-                <div class="rounded-2xl border border-line bg-white p-4">
-                  <p class="text-xs font-bold text-muted">Medan → Pekanbaru</p>
-                  <p class="mt-4 text-4xl font-extrabold tracking-tight text-signal-amber">62</p>
-                  <p class="mt-2 text-xs font-extrabold uppercase tracking-[.16em] text-signal-amber">Moderate</p>
+                <div class="rounded-2xl border border-niyata-line p-4">
+                  <p class="text-xs font-bold text-niyata-muted">Forest Gate Queue</p>
+                  <p class="mt-4 text-4xl font-extrabold tracking-tight text-niyata-amber">41m</p>
+                  <p class="mt-2 text-xs font-extrabold uppercase tracking-[.16em] text-niyata-amber">Watch</p>
                 </div>
-                <div class="rounded-2xl border border-line bg-white p-4">
-                  <p class="text-xs font-bold text-muted">Balikpapan → BJM</p>
-                  <p class="mt-4 text-4xl font-extrabold tracking-tight text-signal-red">88</p>
-                  <p class="mt-2 text-xs font-extrabold uppercase tracking-[.16em] text-signal-red">High risk</p>
+                <div class="rounded-2xl border border-niyata-line p-4">
+                  <p class="text-xs font-bold text-niyata-muted">Fleet Utilization</p>
+                  <p class="mt-4 text-4xl font-extrabold tracking-tight text-niyata-blue">82%</p>
+                  <p class="mt-2 text-xs font-extrabold uppercase tracking-[.16em] text-niyata-blue">Improving</p>
                 </div>
               </div>
-              <div class="relative overflow-hidden rounded-2xl border border-line bg-[#eef3f0] p-4">
-                <svg viewBox="0 0 620 260" class="h-64 w-full" role="img" aria-label="Route map preview">
-                  <path d="M40 198 C130 70, 210 176, 304 92 S478 54, 580 150" fill="none" stroke="#cbd5df" stroke-width="18" stroke-linecap="round"/>
-                  <path class="route-line" d="M40 198 C130 70, 210 176, 304 92 S478 54, 580 150" fill="none" stroke="#0f8f72" stroke-width="8" stroke-linecap="round"/>
-                  <path d="M290 98 C340 90, 380 80, 424 72" fill="none" stroke="#d79722" stroke-width="8" stroke-linecap="round"/>
-                  <path d="M486 92 C520 110, 548 130, 580 150" fill="none" stroke="#d04747" stroke-width="8" stroke-linecap="round"/>
-                  <circle cx="40" cy="198" r="14" fill="#07111f"/><circle cx="304" cy="92" r="12" fill="#0f8f72"/><circle cx="580" cy="150" r="14" fill="#07111f"/>
+              <div class="relative overflow-hidden rounded-2xl border border-niyata-line bg-[#eef4f1] p-4">
+                <svg viewBox="0 0 620 260" class="h-64 w-full" role="img" aria-label="Operational corridor map preview">
+                  <path d="M40 202 C112 78, 205 165, 296 90 S476 54, 580 150" fill="none" stroke="#cbd5df" stroke-width="18" stroke-linecap="round"/>
+                  <path class="route-dash" d="M40 202 C112 78, 205 165, 296 90 S476 54, 580 150" fill="none" stroke="#0e8f70" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M282 98 C342 86, 384 78, 430 72" fill="none" stroke="#d99722" stroke-width="8" stroke-linecap="round"/>
+                  <path d="M486 92 C526 114, 552 132, 580 150" fill="none" stroke="#d64d4d" stroke-width="8" stroke-linecap="round"/>
+                  <circle cx="40" cy="202" r="14" fill="#07111f"/>
+                  <circle cx="296" cy="90" r="12" fill="#0e8f70"/>
+                  <circle cx="580" cy="150" r="14" fill="#07111f"/>
                 </svg>
-                <div class="absolute left-5 top-5 rounded-2xl bg-white/90 p-4 shadow-card backdrop-blur">
-                  <p class="text-xs font-extrabold uppercase tracking-[.18em] text-muted">Recommended dispatch</p>
-                  <p class="mt-2 text-2xl font-extrabold tracking-tight">05:30 - 08:45</p>
-                  <p class="mt-1 text-xs font-semibold text-brand-700">Avoids rainfall and port congestion spike</p>
+                <div class="absolute left-5 top-5 rounded-2xl bg-white/92 p-4 shadow-panel backdrop-blur">
+                  <p class="text-xs font-extrabold uppercase tracking-[.18em] text-niyata-muted">Recommended action</p>
+                  <p class="mt-2 text-2xl font-extrabold tracking-tight">Dispatch 05:30 - 08:45</p>
+                  <p class="mt-1 text-xs font-bold text-niyata-greenDark">Avoids rainfall, congestion, and terrain risk spike</p>
                 </div>
               </div>
               <div class="grid gap-3 sm:grid-cols-3">
-                <div class="rounded-2xl bg-cloud p-4"><p class="text-xs font-bold text-muted">Weather</p><p class="mt-2 font-extrabold">Stable 6h</p></div>
-                <div class="rounded-2xl bg-cloud p-4"><p class="text-xs font-bold text-muted">Traffic</p><p class="mt-2 font-extrabold">-31% vs peak</p></div>
-                <div class="rounded-2xl bg-cloud p-4"><p class="text-xs font-bold text-muted">Confidence</p><p class="mt-2 font-extrabold">High</p></div>
+                <div class="rounded-2xl bg-niyata-cloud p-4"><p class="text-xs font-bold text-niyata-muted">Weather</p><p class="mt-2 font-extrabold">Stable 6h</p></div>
+                <div class="rounded-2xl bg-niyata-cloud p-4"><p class="text-xs font-bold text-niyata-muted">Terrain</p><p class="mt-2 font-extrabold">Moderate</p></div>
+                <div class="rounded-2xl bg-niyata-cloud p-4"><p class="text-xs font-bold text-niyata-muted">Confidence</p><p class="mt-2 font-extrabold">High</p></div>
               </div>
             </div>
           </div>
@@ -194,48 +297,118 @@
       </div>
     </section>
 
-    <section class="bg-white py-10">
+    <section id="trusted" class="bg-white py-12">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <p class="text-center text-xs font-extrabold uppercase tracking-[.24em] text-muted">Designed for logistics teams that need fewer surprises</p>
-        <div class="mt-7 grid grid-cols-2 gap-3 text-center text-sm font-extrabold text-muted sm:grid-cols-4 lg:grid-cols-6">
-          <div class="rounded-2xl border border-line px-4 py-4">BMKG-ready</div>
-          <div class="rounded-2xl border border-line px-4 py-4">BPBD alerts</div>
-          <div class="rounded-2xl border border-line px-4 py-4">Port ops</div>
-          <div class="rounded-2xl border border-line px-4 py-4">3PL fleets</div>
-          <div class="rounded-2xl border border-line px-4 py-4">FMCG routes</div>
-          <div class="rounded-2xl border border-line px-4 py-4">Mining logistics</div>
+        <p class="text-center text-xs font-extrabold uppercase tracking-[.24em] text-niyata-muted">Built for enterprise operating environments</p>
+        <div class="mt-8 grid grid-cols-2 gap-3 text-center text-sm font-extrabold text-niyata-slate sm:grid-cols-3 lg:grid-cols-5">
+          <div class="rounded-2xl border border-niyata-line px-4 py-5">Forestry Group</div>
+          <div class="rounded-2xl border border-niyata-line px-4 py-5">Logistics Operator</div>
+          <div class="rounded-2xl border border-niyata-line px-4 py-5">Plantation Estate</div>
+          <div class="rounded-2xl border border-niyata-line px-4 py-5">Industrial Fleet</div>
+          <div class="rounded-2xl border border-niyata-line px-4 py-5 sm:col-span-2 lg:col-span-1">Government Agency</div>
         </div>
       </div>
     </section>
 
-    <section id="platform" class="bg-cloud py-24">
+    <section id="capabilities" class="bg-niyata-cloud py-24">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="fade-in max-w-3xl">
-          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-brand-600">Platform</p>
-          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">A decision layer for every route, vehicle, and dispatch window.</h2>
-          <p class="mt-5 text-lg leading-8 text-muted">RouteRisk turns fragmented operational signals into a single source of truth for planning, dispatch, and exception prevention.</p>
+        <div class="fade-up max-w-3xl">
+          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-green">Core capabilities</p>
+          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">One intelligence layer for complex industrial movement.</h2>
+          <p class="mt-5 text-lg leading-8 text-niyata-muted">Niyata combines operational data, field constraints, and risk signals into workflows that help teams act before bottlenecks become losses.</p>
         </div>
-        <div class="mt-12 grid gap-5 md:grid-cols-3">
-          <article class="fade-in rounded-3xl border border-line bg-white p-7 shadow-card transition hover:-translate-y-1 hover:shadow-soft">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-700">
-              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19V5m0 14h16M8 17V9m5 8V4m5 13v-6"/></svg>
-            </div>
-            <h3 class="mt-6 text-xl font-extrabold tracking-tight">Route Risk Score</h3>
-            <p class="mt-3 leading-7 text-muted">A normalized 0-100 score combining rainfall, congestion, road condition, port delay, and seasonal pressure.</p>
+        <div class="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <article class="fade-up surface rounded-[var(--radius-md)] p-7 transition hover:-translate-y-1 hover:shadow-lift">
+            <h3 class="text-xl font-extrabold">Route Risk Assessment</h3>
+            <p class="mt-3 leading-7 text-niyata-muted">Score roads, terrain, weather, safety, and accessibility before dispatch.</p>
           </article>
-          <article class="fade-in rounded-3xl border border-line bg-white p-7 shadow-card transition hover:-translate-y-1 hover:shadow-soft">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-50 text-signal-blue">
-              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 6v6l4 2"/><circle cx="12" cy="12" r="9"/></svg>
-            </div>
-            <h3 class="mt-6 text-xl font-extrabold tracking-tight">Dispatch Window AI</h3>
-            <p class="mt-3 leading-7 text-muted">Identify the safest departure window before risk spikes, instead of reacting after vehicles are already delayed.</p>
+          <article class="fade-up surface rounded-[var(--radius-md)] p-7 transition hover:-translate-y-1 hover:shadow-lift">
+            <h3 class="text-xl font-extrabold">Forestry Logistics</h3>
+            <p class="mt-3 leading-7 text-niyata-muted">Reduce gate queues, digitize truck movements, and monitor transport cycles.</p>
           </article>
-          <article class="fade-in rounded-3xl border border-line bg-white p-7 shadow-card transition hover:-translate-y-1 hover:shadow-soft">
-            <div class="flex h-12 w-12 items-center justify-center rounded-2xl bg-amber-50 text-signal-amber">
-              <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-12M4 8l5-2 6 2 5-2v12l-5 2-6-2-5 2V8z"/></svg>
-            </div>
-            <h3 class="mt-6 text-xl font-extrabold tracking-tight">Risk Map Visualization</h3>
-            <p class="mt-3 leading-7 text-muted">Color-coded route segments make disruption visible for land corridors, ferry crossings, and multimodal routes.</p>
+          <article class="fade-up surface rounded-[var(--radius-md)] p-7 transition hover:-translate-y-1 hover:shadow-lift">
+            <h3 class="text-xl font-extrabold">Plantation Operations</h3>
+            <p class="mt-3 leading-7 text-niyata-muted">Track field accessibility, harvest movement, and seasonal operational pressure.</p>
+          </article>
+          <article class="fade-up surface rounded-[var(--radius-md)] p-7 transition hover:-translate-y-1 hover:shadow-lift">
+            <h3 class="text-xl font-extrabold">Industrial Transportation</h3>
+            <p class="mt-3 leading-7 text-niyata-muted">Improve dispatch timing and fleet utilization across industrial routes.</p>
+          </article>
+          <article class="fade-up surface rounded-[var(--radius-md)] p-7 transition hover:-translate-y-1 hover:shadow-lift">
+            <h3 class="text-xl font-extrabold">Operational Risk Management</h3>
+            <p class="mt-3 leading-7 text-niyata-muted">Detect risk escalation and trigger structured recommendations for managers.</p>
+          </article>
+          <article class="fade-up surface rounded-[var(--radius-md)] p-7 transition hover:-translate-y-1 hover:shadow-lift">
+            <h3 class="text-xl font-extrabold">Supply Chain Visibility</h3>
+            <p class="mt-3 leading-7 text-niyata-muted">Create a shared source of truth for dispatch, control room, and leadership teams.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="routerisk" class="bg-white py-24">
+      <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
+        <div class="fade-up">
+          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-green">RouteRisk Intelligence</p>
+          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Know whether a route is safe, delayed, or operationally expensive before sending assets.</h2>
+          <p class="mt-5 text-lg leading-8 text-niyata-muted">RouteRisk transforms scattered signals into a score, level, and recommendation so teams can choose better dispatch windows and safer alternatives.</p>
+          <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+            <a href="#demo" class="rounded-full bg-niyata-ink px-6 py-4 text-center text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-niyata-greenDark" data-track="routerisk_demo_cta">Try calculator</a>
+            <a href="#methodology" class="rounded-full border border-niyata-line px-6 py-4 text-center text-sm font-extrabold text-niyata-ink transition hover:-translate-y-0.5 hover:border-niyata-ink">View methodology</a>
+          </div>
+        </div>
+        <div class="fade-up grid gap-4 sm:grid-cols-2">
+          <div class="rounded-[var(--radius-md)] border border-niyata-line p-6">
+            <p class="text-sm font-extrabold text-niyata-muted">Risk score</p>
+            <p class="mt-4 text-5xl font-extrabold tracking-tight text-niyata-green">0-100</p>
+            <p class="mt-3 text-sm leading-6 text-niyata-muted">Normalized scoring for consistent executive review.</p>
+          </div>
+          <div class="rounded-[var(--radius-md)] border border-niyata-line p-6">
+            <p class="text-sm font-extrabold text-niyata-muted">Decision output</p>
+            <p class="mt-4 text-3xl font-extrabold tracking-tight">Go / Watch / Delay</p>
+            <p class="mt-3 text-sm leading-6 text-niyata-muted">Clear action language for field and control-room teams.</p>
+          </div>
+          <div class="rounded-[var(--radius-md)] border border-niyata-line p-6 sm:col-span-2">
+            <p class="text-sm font-extrabold text-niyata-muted">Route intelligence formula</p>
+            <p class="mt-4 rounded-2xl bg-niyata-cloud p-4 font-mono text-sm text-niyata-slate">Risk = Road 22% + Weather 20% + Accessibility 18% + Traffic 14% + Terrain 14% + Safety 12%</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="case-studies" class="bg-niyata-ink py-24 text-white">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="fade-up flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+          <div class="max-w-3xl">
+            <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-mint">Case studies</p>
+            <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Practical intelligence for operational teams.</h2>
+          </div>
+          <p class="max-w-md leading-7 text-white/62">These representative cases show how Niyata can be deployed across forestry, logistics, and industrial fleet workflows.</p>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          <article class="fade-up rounded-[var(--radius-md)] border border-white/12 bg-white/[.06] p-7">
+            <p class="text-sm font-extrabold uppercase tracking-[.18em] text-white/50">RFID Forestry Operations</p>
+            <h3 class="mt-5 text-2xl font-extrabold">Reduce gate waiting time</h3>
+            <p class="mt-4 text-white/66">Challenge: long truck queues and manual checkpoint records.</p>
+            <p class="mt-3 text-white/66">Solution: RFID tracking, digital queue visibility, and cycle-time analytics.</p>
+            <p class="mt-6 text-4xl font-extrabold text-niyata-mint">35%</p>
+            <p class="mt-2 text-sm font-bold text-white/70">waiting time reduction target</p>
+          </article>
+          <article class="fade-up rounded-[var(--radius-md)] border border-white/12 bg-white/[.06] p-7">
+            <p class="text-sm font-extrabold uppercase tracking-[.18em] text-white/50">Route Risk Monitoring</p>
+            <h3 class="mt-5 text-2xl font-extrabold">Prevent unsafe dispatches</h3>
+            <p class="mt-4 text-white/66">Challenge: unsafe routes from rain, terrain, traffic, and poor visibility.</p>
+            <p class="mt-3 text-white/66">Solution: risk scoring, alerts, and dispatch recommendations.</p>
+            <p class="mt-6 text-4xl font-extrabold text-niyata-mint">28%</p>
+            <p class="mt-2 text-sm font-bold text-white/70">incident reduction scenario</p>
+          </article>
+          <article class="fade-up rounded-[var(--radius-md)] border border-white/12 bg-white/[.06] p-7">
+            <p class="text-sm font-extrabold uppercase tracking-[.18em] text-white/50">Fleet Optimization</p>
+            <h3 class="mt-5 text-2xl font-extrabold">Increase productive asset time</h3>
+            <p class="mt-4 text-white/66">Challenge: low truck utilization and unclear idle-time causes.</p>
+            <p class="mt-3 text-white/66">Solution: operational analytics, dispatch planning, and bottleneck reporting.</p>
+            <p class="mt-6 text-4xl font-extrabold text-niyata-mint">18%</p>
+            <p class="mt-2 text-sm font-bold text-white/70">utilization improvement target</p>
           </article>
         </div>
       </div>
@@ -243,193 +416,352 @@
 
     <section id="benefits" class="bg-white py-24">
       <div class="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
-        <div class="fade-in">
-          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-brand-600">Business impact</p>
-          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Reduce delays without adding operational complexity.</h2>
-          <p class="mt-5 text-lg leading-8 text-muted">Built for dispatchers, planners, and logistics leaders who need fast decisions, not another dashboard that requires training.</p>
-          <a href="#contact" class="mt-8 inline-flex rounded-full bg-ink px-6 py-4 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-brand-700">Schedule consultation</a>
+        <div class="fade-up">
+          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-green">Benefits</p>
+          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Designed to improve decisions, not add another dashboard.</h2>
+          <p class="mt-5 text-lg leading-8 text-niyata-muted">Niyata packages complex operational signals into workflows that field teams can use and executives can trust.</p>
         </div>
         <div class="grid gap-4 sm:grid-cols-2">
-          <div class="fade-in rounded-3xl border border-line p-6">
-            <p class="text-3xl font-extrabold tracking-tight">20-35%</p>
-            <p class="mt-3 font-bold">Potential delay reduction</p>
-            <p class="mt-2 text-sm leading-6 text-muted">By avoiding high-risk windows and rerouting earlier.</p>
-          </div>
-          <div class="fade-in rounded-3xl border border-line p-6">
-            <p class="text-3xl font-extrabold tracking-tight">&lt;60s</p>
-            <p class="mt-3 font-bold">Decision time</p>
-            <p class="mt-2 text-sm leading-6 text-muted">From route selection to recommended dispatch action.</p>
-          </div>
-          <div class="fade-in rounded-3xl border border-line p-6">
-            <p class="text-3xl font-extrabold tracking-tight">Multi-source</p>
-            <p class="mt-3 font-bold">Operational intelligence</p>
-            <p class="mt-2 text-sm leading-6 text-muted">Weather, traffic, road, port, and seasonal data in one model.</p>
-          </div>
-          <div class="fade-in rounded-3xl border border-line p-6">
-            <p class="text-3xl font-extrabold tracking-tight">No setup</p>
-            <p class="mt-3 font-bold">Start with public data</p>
-            <p class="mt-2 text-sm leading-6 text-muted">Enterprise integrations can be added after pilot validation.</p>
-          </div>
+          <div class="fade-up rounded-[var(--radius-md)] border border-niyata-line p-6"><p class="text-3xl font-extrabold">Earlier action</p><p class="mt-3 leading-7 text-niyata-muted">Spot route and access risk before a truck, barge, or field crew is committed.</p></div>
+          <div class="fade-up rounded-[var(--radius-md)] border border-niyata-line p-6"><p class="text-3xl font-extrabold">Shared truth</p><p class="mt-3 leading-7 text-niyata-muted">Give operations, safety, logistics, and leadership the same risk language.</p></div>
+          <div class="fade-up rounded-[var(--radius-md)] border border-niyata-line p-6"><p class="text-3xl font-extrabold">Pilot fast</p><p class="mt-3 leading-7 text-niyata-muted">Start with public and operational data, then integrate enterprise systems after validation.</p></div>
+          <div class="fade-up rounded-[var(--radius-md)] border border-niyata-line p-6"><p class="text-3xl font-extrabold">Scale safely</p><p class="mt-3 leading-7 text-niyata-muted">Move from route-level insight to organization-wide operating intelligence.</p></div>
         </div>
       </div>
     </section>
 
-    <section id="services" class="bg-ink py-24 text-white">
+    <section id="methodology" class="bg-niyata-cloud py-24">
       <div class="mx-auto max-w-7xl px-5 lg:px-8">
-        <div class="fade-in flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
-          <div class="max-w-3xl">
-            <p class="text-sm font-extrabold uppercase tracking-[.22em] text-brand-100">Services</p>
-            <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">From pilot to enterprise rollout.</h2>
-          </div>
-          <p class="max-w-md leading-7 text-white/62">RouteRisk can start as a decision-support pilot, then scale into APIs, dashboards, reports, and control-room workflows.</p>
+        <div class="fade-up max-w-3xl">
+          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-green">Methodology</p>
+          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Explainable scoring for high-stakes operational risk.</h2>
+          <p class="mt-5 text-lg leading-8 text-niyata-muted">Every recommendation should be inspectable. RouteRisk displays the score components, weighting, and operational recommendation behind each route.</p>
         </div>
-        <div class="mt-12 grid gap-5 md:grid-cols-3">
-          <article class="fade-in rounded-3xl border border-white/12 bg-white/[.06] p-7">
-            <h3 class="text-xl font-extrabold">Risk Intelligence Pilot</h3>
-            <p class="mt-3 leading-7 text-white/64">Validate priority corridors, disruption patterns, and dispatch windows with a focused 30-day pilot.</p>
-          </article>
-          <article class="fade-in rounded-3xl border border-white/12 bg-white/[.06] p-7">
-            <h3 class="text-xl font-extrabold">Enterprise Dashboard</h3>
-            <p class="mt-3 leading-7 text-white/64">Deploy route monitoring, alerts, operator views, and management reporting for your logistics team.</p>
-          </article>
-          <article class="fade-in rounded-3xl border border-white/12 bg-white/[.06] p-7">
-            <h3 class="text-xl font-extrabold">API & Data Integration</h3>
-            <p class="mt-3 leading-7 text-white/64">Connect internal fleet data, TMS workflows, shipment status, or custom operational rules.</p>
-          </article>
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          <div class="fade-up rounded-[var(--radius-lg)] bg-white p-7 shadow-panel lg:col-span-2">
+            <div class="space-y-5" id="methodBars">
+              <div data-weight="22" data-label="Road Condition"></div>
+              <div data-weight="20" data-label="Weather"></div>
+              <div data-weight="18" data-label="Accessibility"></div>
+              <div data-weight="14" data-label="Traffic"></div>
+              <div data-weight="14" data-label="Terrain"></div>
+              <div data-weight="12" data-label="Safety"></div>
+            </div>
+          </div>
+          <div class="fade-up rounded-[var(--radius-lg)] bg-niyata-ink p-7 text-white shadow-panel">
+            <p class="text-sm font-extrabold uppercase tracking-[.18em] text-white/48">Formula</p>
+            <p class="mt-5 font-mono text-sm leading-7 text-white/76">Weighted Risk Score = Sum(component risk x component weight)</p>
+            <p class="mt-6 text-sm leading-7 text-white/62">Scores below 35 are low risk, 35-69 require monitoring, and 70+ require delay, reroute, or managerial approval.</p>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="enterprise" class="bg-cloud py-24">
-      <div class="mx-auto grid max-w-7xl gap-8 px-5 lg:grid-cols-[1fr_1fr] lg:px-8">
-        <div class="fade-in rounded-[2rem] bg-white p-8 shadow-card">
-          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-brand-600">Enterprise credibility</p>
-          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em]">Built for serious operational decisions.</h2>
-          <div class="mt-8 grid gap-3">
-            <div class="flex gap-4 rounded-2xl border border-line p-4">
-              <span class="mt-1 h-3 w-3 rounded-full bg-brand-500"></span>
-              <div><p class="font-extrabold">Transparent scoring model</p><p class="mt-1 text-sm leading-6 text-muted">Explainable risk factors for every recommendation.</p></div>
-            </div>
-            <div class="flex gap-4 rounded-2xl border border-line p-4">
-              <span class="mt-1 h-3 w-3 rounded-full bg-brand-500"></span>
-              <div><p class="font-extrabold">Data source governance</p><p class="mt-1 text-sm leading-6 text-muted">Source, freshness, and fallback state shown in the interface.</p></div>
-            </div>
-            <div class="flex gap-4 rounded-2xl border border-line p-4">
-              <span class="mt-1 h-3 w-3 rounded-full bg-brand-500"></span>
-              <div><p class="font-extrabold">Pilot-ready rollout</p><p class="mt-1 text-sm leading-6 text-muted">Start with 3-5 high-value corridors before wider deployment.</p></div>
-            </div>
-          </div>
+    <section id="demo" class="bg-white py-24">
+      <div class="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[.9fr_1.1fr] lg:px-8">
+        <div class="fade-up">
+          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-green">Interactive demo</p>
+          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Calculate a route risk score instantly.</h2>
+          <p class="mt-5 text-lg leading-8 text-niyata-muted">This static calculator demonstrates how risk factors can be combined into a clear score, level, and recommendation. No backend required.</p>
         </div>
-        <div class="grid gap-5">
-          <blockquote class="fade-in rounded-[2rem] bg-white p-8 shadow-card">
-            <p class="text-xl font-bold leading-8">"RouteRisk gives logistics teams a simple language for risk. It turns scattered signals into a dispatch decision that managers can review quickly."</p>
-            <footer class="mt-6 text-sm font-bold text-muted">Operations Director, national 3PL pilot candidate</footer>
-          </blockquote>
-          <blockquote class="fade-in rounded-[2rem] bg-white p-8 shadow-card">
-            <p class="text-xl font-bold leading-8">"The value is not another map. The value is knowing whether to send the truck now, wait three hours, or reroute before the cost appears."</p>
-            <footer class="mt-6 text-sm font-bold text-muted">Supply Chain Lead, FMCG distribution</footer>
-          </blockquote>
-        </div>
-      </div>
-    </section>
-
-    <section id="about" class="bg-white py-24">
-      <div class="mx-auto max-w-4xl px-5 text-center lg:px-8">
-        <p class="fade-in text-sm font-extrabold uppercase tracking-[.22em] text-brand-600">About RouteRisk</p>
-        <h2 class="fade-in mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Logistics intelligence designed for Indonesia's real-world complexity.</h2>
-        <p class="fade-in mt-6 text-lg leading-8 text-muted">Indonesia's routes are multimodal, weather-sensitive, and operationally fragmented. RouteRisk exists to help dispatchers, fleet owners, and enterprise logistics teams make earlier, clearer, and more defensible decisions.</p>
-      </div>
-    </section>
-
-    <section id="contact" class="bg-ink px-5 py-24 text-white lg:px-8">
-      <div class="mx-auto grid max-w-7xl gap-10 rounded-[2rem] border border-white/12 bg-white/[.06] p-6 shadow-glow backdrop-blur lg:grid-cols-[.95fr_1.05fr] lg:p-10">
-        <div class="fade-in">
-          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-brand-100">Book demo</p>
-          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">See how RouteRisk would score your priority corridors.</h2>
-          <p class="mt-5 max-w-xl leading-8 text-white/68">Use this consultation request to start an enterprise pilot, discuss data requirements, or evaluate corridor risk for your fleet network.</p>
-          <div class="mt-8 grid gap-3 text-sm text-white/72">
-            <p class="flex gap-3"><span class="text-brand-100">✓</span> Corridor risk review</p>
-            <p class="flex gap-3"><span class="text-brand-100">✓</span> Pilot roadmap and success metrics</p>
-            <p class="flex gap-3"><span class="text-brand-100">✓</span> Dashboard and API integration options</p>
-          </div>
-        </div>
-        <form class="fade-in rounded-[1.5rem] bg-white p-6 text-ink shadow-soft" aria-label="Contact form">
-          <div class="grid gap-4 sm:grid-cols-2">
-            <label class="grid gap-2 text-sm font-bold">Name
-              <input required class="rounded-2xl border border-line px-4 py-3 outline-none ring-brand-500 transition focus:ring-4" placeholder="Budi Santoso" />
+        <div class="fade-up rounded-[var(--radius-lg)] border border-niyata-line bg-white p-6 shadow-panel">
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="grid gap-2 text-sm font-extrabold">Road Type
+              <select id="roadType" class="rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4">
+                <option value="18">Paved industrial road</option>
+                <option value="38">Mixed estate road</option>
+                <option value="58">Unpaved forestry road</option>
+                <option value="76">Damaged remote road</option>
+              </select>
             </label>
-            <label class="grid gap-2 text-sm font-bold">Work email
-              <input required type="email" class="rounded-2xl border border-line px-4 py-3 outline-none ring-brand-500 transition focus:ring-4" placeholder="you@company.com" />
+            <label class="grid gap-2 text-sm font-extrabold">Weather
+              <select id="weather" class="rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4">
+                <option value="10">Clear</option>
+                <option value="34">Light rain</option>
+                <option value="58">Heavy rain</option>
+                <option value="82">Storm / flood watch</option>
+              </select>
             </label>
-          </div>
-          <div class="mt-4 grid gap-4 sm:grid-cols-2">
-            <label class="grid gap-2 text-sm font-bold">Company
-              <input class="rounded-2xl border border-line px-4 py-3 outline-none ring-brand-500 transition focus:ring-4" placeholder="Company name" />
+            <label class="grid gap-2 text-sm font-extrabold">Traffic
+              <select id="traffic" class="rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4">
+                <option value="14">Low</option>
+                <option value="36">Moderate</option>
+                <option value="62">High</option>
+                <option value="80">Severe congestion</option>
+              </select>
             </label>
-            <label class="grid gap-2 text-sm font-bold">Fleet size
-              <select class="rounded-2xl border border-line px-4 py-3 outline-none ring-brand-500 transition focus:ring-4">
-                <option>1-25 vehicles</option>
-                <option>26-100 vehicles</option>
-                <option>101-500 vehicles</option>
-                <option>500+ vehicles</option>
+            <label class="grid gap-2 text-sm font-extrabold">Terrain
+              <select id="terrain" class="rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4">
+                <option value="16">Flat</option>
+                <option value="34">Rolling</option>
+                <option value="58">Hilly</option>
+                <option value="78">Steep / unstable</option>
               </select>
             </label>
           </div>
-          <label class="mt-4 grid gap-2 text-sm font-bold">Priority corridors
-            <textarea class="min-h-28 rounded-2xl border border-line px-4 py-3 outline-none ring-brand-500 transition focus:ring-4" placeholder="Example: Jakarta - Surabaya, Medan - Pekanbaru, Balikpapan - Banjarmasin"></textarea>
+          <button id="calculateRisk" class="mt-6 w-full rounded-full bg-niyata-ink px-6 py-4 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-niyata-greenDark" data-track="demo_calculate">Calculate risk</button>
+          <div class="mt-6 rounded-[var(--radius-md)] bg-niyata-cloud p-6">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p class="text-sm font-extrabold uppercase tracking-[.18em] text-niyata-muted">Risk score</p>
+                <p id="riskScore" class="mt-2 text-6xl font-extrabold tracking-tight text-niyata-green">20</p>
+              </div>
+              <span id="riskLevel" class="w-fit rounded-full bg-niyata-mint px-4 py-2 text-sm font-extrabold text-niyata-greenDark">LOW RISK</span>
+            </div>
+            <div class="mt-5 h-3 overflow-hidden rounded-full bg-white">
+              <div id="riskBar" class="h-full w-[20%] rounded-full bg-niyata-green transition-all duration-500"></div>
+            </div>
+            <p id="riskRecommendation" class="mt-5 text-sm font-semibold leading-7 text-niyata-slate">Proceed with normal dispatch. Continue monitoring weather and access updates.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="testimonials" class="bg-niyata-cloud py-24">
+      <div class="mx-auto max-w-7xl px-5 lg:px-8">
+        <div class="fade-up max-w-3xl">
+          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-green">Testimonials</p>
+          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Built for teams accountable for real operational outcomes.</h2>
+        </div>
+        <div class="mt-12 grid gap-5 lg:grid-cols-3">
+          <blockquote class="fade-up rounded-[var(--radius-md)] bg-white p-7 shadow-panel">
+            <p class="text-lg font-bold leading-8">"Niyata gives managers a practical risk language that field teams can actually use before dispatch."</p>
+            <footer class="mt-6 text-sm font-extrabold text-niyata-muted">Operations Director, forestry logistics</footer>
+          </blockquote>
+          <blockquote class="fade-up rounded-[var(--radius-md)] bg-white p-7 shadow-panel">
+            <p class="text-lg font-bold leading-8">"The biggest value is decision timing. We need to know when to move, wait, or reroute."</p>
+            <footer class="mt-6 text-sm font-extrabold text-niyata-muted">Supply Chain Lead, plantation group</footer>
+          </blockquote>
+          <blockquote class="fade-up rounded-[var(--radius-md)] bg-white p-7 shadow-panel">
+            <p class="text-lg font-bold leading-8">"A shared operational view reduces debate and makes escalation clearer for leadership."</p>
+            <footer class="mt-6 text-sm font-extrabold text-niyata-muted">Fleet Manager, industrial transport</footer>
+          </blockquote>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="bg-niyata-ink px-5 py-24 text-white lg:px-8">
+      <div class="mx-auto grid max-w-7xl gap-10 rounded-[var(--radius-lg)] border border-white/12 bg-white/[.06] p-6 shadow-glow backdrop-blur lg:grid-cols-[.95fr_1.05fr] lg:p-10">
+        <div class="fade-up">
+          <p class="text-sm font-extrabold uppercase tracking-[.22em] text-niyata-mint">Contact CTA</p>
+          <h2 class="mt-4 text-4xl font-extrabold tracking-[-0.035em] sm:text-5xl">Start with one corridor, estate, or fleet workflow.</h2>
+          <p class="mt-5 max-w-xl leading-8 text-white/68">Request an enterprise pilot to evaluate Niyata for route risk, forestry logistics, plantation operations, or industrial transportation.</p>
+          <div class="mt-8 grid gap-3 text-sm text-white/72">
+            <p class="flex gap-3"><span class="text-niyata-mint">-</span> Pilot roadmap and success metrics</p>
+            <p class="flex gap-3"><span class="text-niyata-mint">-</span> Data readiness and integration review</p>
+            <p class="flex gap-3"><span class="text-niyata-mint">-</span> RouteRisk methodology walkthrough</p>
+          </div>
+        </div>
+        <form id="contactForm" class="fade-up rounded-[var(--radius-md)] bg-white p-6 text-niyata-ink shadow-panel" action="https://formspree.io/f/YOUR_FORMSPREE_ENDPOINT" method="POST" aria-label="Enterprise pilot request form" novalidate>
+          <p class="mb-5 rounded-2xl bg-niyata-mint px-4 py-3 text-sm font-bold text-niyata-greenDark">Replace YOUR_FORMSPREE_ENDPOINT with your production Formspree form ID before launch.</p>
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="grid gap-2 text-sm font-extrabold">Name
+              <input name="name" required class="form-field rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4" placeholder="Budi Santoso" />
+            </label>
+            <label class="grid gap-2 text-sm font-extrabold">Work email
+              <input name="email" required type="email" class="form-field rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4" placeholder="you@company.com" />
+            </label>
+          </div>
+          <div class="mt-4 grid gap-4 sm:grid-cols-2">
+            <label class="grid gap-2 text-sm font-extrabold">Company
+              <input name="company" required class="form-field rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4" placeholder="Company name" />
+            </label>
+            <label class="grid gap-2 text-sm font-extrabold">Focus area
+              <select name="focus" class="rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4">
+                <option>Route Risk Assessment</option>
+                <option>Forestry Logistics</option>
+                <option>Plantation Operations</option>
+                <option>Industrial Transportation</option>
+                <option>Operational Risk Management</option>
+              </select>
+            </label>
+          </div>
+          <label class="mt-4 grid gap-2 text-sm font-extrabold">Operational challenge
+            <textarea name="message" required class="form-field min-h-28 rounded-2xl border border-niyata-line px-4 py-3 outline-none ring-niyata-green/20 transition focus:ring-4" placeholder="Tell us about routes, fleets, estates, or operational bottlenecks you want to improve."></textarea>
           </label>
-          <button type="submit" class="mt-5 w-full rounded-full bg-ink px-6 py-4 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-brand-700">Request enterprise consultation</button>
-          <p id="formMessage" class="mt-4 hidden rounded-2xl bg-brand-50 px-4 py-3 text-sm font-bold text-brand-700">Thanks. This prototype form is ready to connect to your CRM or form endpoint.</p>
+          <input type="hidden" name="_subject" value="Niyata enterprise pilot request" />
+          <button id="submitButton" type="submit" class="mt-5 flex w-full items-center justify-center rounded-full bg-niyata-ink px-6 py-4 text-sm font-extrabold text-white transition hover:-translate-y-0.5 hover:bg-niyata-greenDark">
+            <span id="submitText">Request enterprise pilot</span>
+            <span id="submitSpinner" class="ml-3 hidden h-4 w-4 animate-spin rounded-full border-2 border-white/30 border-t-white"></span>
+          </button>
+          <p id="formStatus" class="mt-4 hidden rounded-2xl px-4 py-3 text-sm font-bold" role="status" aria-live="polite"></p>
         </form>
       </div>
     </section>
   </main>
 
-  <footer class="border-t border-line bg-white">
+  <footer class="border-t border-niyata-line bg-white">
     <div class="mx-auto flex max-w-7xl flex-col gap-6 px-5 py-10 sm:flex-row sm:items-center sm:justify-between lg:px-8">
       <div class="flex items-center gap-3">
-        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-ink text-sm font-extrabold text-white">R</span>
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-niyata-ink text-sm font-extrabold text-white">N</span>
         <div>
-          <p class="text-sm font-extrabold">RouteRisk</p>
-          <p class="text-xs font-medium text-muted">Predict disruption. Dispatch smarter.</p>
+          <p class="text-sm font-extrabold">Niyata</p>
+          <p class="text-xs font-semibold text-niyata-muted">Operational intelligence for industrial movement.</p>
         </div>
       </div>
-      <div class="flex flex-wrap gap-5 text-sm font-semibold text-muted">
-        <a href="#platform" class="hover:text-ink">Platform</a>
-        <a href="#enterprise" class="hover:text-ink">Enterprise</a>
-        <a href="#contact" class="hover:text-ink">Contact</a>
-        <a href="#" class="hover:text-ink">Privacy</a>
+      <div class="flex flex-wrap gap-5 text-sm font-bold text-niyata-muted">
+        <a href="#capabilities" class="hover:text-niyata-ink">Capabilities</a>
+        <a href="#routerisk" class="hover:text-niyata-ink">RouteRisk</a>
+        <a href="#case-studies" class="hover:text-niyata-ink">Case Studies</a>
+        <a href="#contact" class="hover:text-niyata-ink">Contact</a>
+        <a href="#contact" class="hover:text-niyata-ink">Privacy</a>
       </div>
     </div>
   </footer>
 
   <script>
-    const menuButton = document.getElementById('menuButton');
-    const mobileMenu = document.getElementById('mobileMenu');
-    menuButton.addEventListener('click', () => {
-      const isOpen = !mobileMenu.classList.contains('hidden');
-      mobileMenu.classList.toggle('hidden');
-      menuButton.setAttribute('aria-expanded', String(!isOpen));
+    const trackEvent = (name, detail = {}) => {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ event: name, ...detail });
+      if (window.gtag) window.gtag("event", name, detail);
+      if (window.clarity) window.clarity("event", name);
+      if (window.fbq) window.fbq("trackCustom", name, detail);
+    };
+
+    document.querySelectorAll("[data-track]").forEach((element) => {
+      element.addEventListener("click", () => trackEvent("cta_click", { label: element.dataset.track }));
     });
 
-    document.querySelectorAll('#mobileMenu a').forEach((link) => {
-      link.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-        menuButton.setAttribute('aria-expanded', 'false');
+    const menuButton = document.getElementById("menuButton");
+    const mobileMenu = document.getElementById("mobileMenu");
+    menuButton.addEventListener("click", () => {
+      const isOpen = !mobileMenu.classList.contains("hidden");
+      mobileMenu.classList.toggle("hidden");
+      menuButton.setAttribute("aria-expanded", String(!isOpen));
+    });
+    document.querySelectorAll("#mobileMenu a").forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        menuButton.setAttribute("aria-expanded", "false");
       });
     });
 
-    const observer = new IntersectionObserver((entries) => {
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) entry.target.classList.add('is-visible');
+        if (entry.isIntersecting) entry.target.classList.add("visible");
       });
     }, { threshold: 0.12 });
+    document.querySelectorAll(".fade-up").forEach((element) => revealObserver.observe(element));
 
-    document.querySelectorAll('.fade-in').forEach((item) => observer.observe(item));
+    document.querySelectorAll("#methodBars > div").forEach((item) => {
+      const weight = Number(item.dataset.weight);
+      const label = item.dataset.label;
+      item.innerHTML = `
+        <div class="mb-2 flex items-center justify-between gap-4">
+          <span class="text-sm font-extrabold text-niyata-ink">${label}</span>
+          <span class="text-sm font-extrabold text-niyata-muted">${weight}%</span>
+        </div>
+        <div class="h-3 overflow-hidden rounded-full bg-niyata-cloud">
+          <div class="h-full rounded-full bg-niyata-green" style="width:${weight * 3.8}%"></div>
+        </div>
+      `;
+    });
 
-    document.querySelector('form').addEventListener('submit', (event) => {
+    const controls = ["roadType", "weather", "traffic", "terrain"].map((id) => document.getElementById(id));
+    const riskScore = document.getElementById("riskScore");
+    const riskLevel = document.getElementById("riskLevel");
+    const riskBar = document.getElementById("riskBar");
+    const riskRecommendation = document.getElementById("riskRecommendation");
+
+    const getRiskResult = () => {
+      const [road, weather, traffic, terrain] = controls.map((control) => Number(control.value));
+      const score = Math.round((road * 0.32) + (weather * 0.28) + (traffic * 0.18) + (terrain * 0.22));
+      if (score < 35) {
+        return {
+          score,
+          level: "LOW RISK",
+          color: "bg-niyata-green",
+          text: "text-niyata-green",
+          badge: "bg-niyata-mint text-niyata-greenDark",
+          recommendation: "Proceed with normal dispatch. Continue monitoring weather and access updates."
+        };
+      }
+      if (score < 70) {
+        return {
+          score,
+          level: "WATCH",
+          color: "bg-niyata-amber",
+          text: "text-niyata-amber",
+          badge: "bg-amber-100 text-amber-800",
+          recommendation: "Dispatch with monitoring. Prepare alternative route, supervisor approval, and updated field confirmation."
+        };
+      }
+      return {
+        score,
+        level: "HIGH RISK",
+        color: "bg-niyata-red",
+        text: "text-niyata-red",
+        badge: "bg-red-100 text-red-800",
+        recommendation: "Delay, reroute, or escalate for managerial approval. Conditions are likely to affect safety, cost, or service reliability."
+      };
+    };
+
+    const renderRisk = () => {
+      const result = getRiskResult();
+      riskScore.textContent = result.score;
+      riskScore.className = `mt-2 text-6xl font-extrabold tracking-tight ${result.text}`;
+      riskLevel.textContent = result.level;
+      riskLevel.className = `w-fit rounded-full px-4 py-2 text-sm font-extrabold ${result.badge}`;
+      riskBar.className = `h-full rounded-full transition-all duration-500 ${result.color}`;
+      riskBar.style.width = `${result.score}%`;
+      riskRecommendation.textContent = result.recommendation;
+      trackEvent("demo_usage", { score: result.score, level: result.level });
+    };
+
+    document.getElementById("calculateRisk").addEventListener("click", renderRisk);
+    controls.forEach((control) => control.addEventListener("change", renderRisk));
+    renderRisk();
+
+    const contactForm = document.getElementById("contactForm");
+    const submitButton = document.getElementById("submitButton");
+    const submitText = document.getElementById("submitText");
+    const submitSpinner = document.getElementById("submitSpinner");
+    const formStatus = document.getElementById("formStatus");
+
+    const showStatus = (message, type) => {
+      formStatus.textContent = message;
+      formStatus.className = `mt-4 rounded-2xl px-4 py-3 text-sm font-bold ${type === "success" ? "bg-niyata-mint text-niyata-greenDark" : "bg-red-50 text-red-700"}`;
+      formStatus.classList.remove("hidden");
+    };
+
+    contactForm.addEventListener("submit", async (event) => {
       event.preventDefault();
-      document.getElementById('formMessage').classList.remove('hidden');
+      formStatus.classList.add("hidden");
+      const invalidField = [...contactForm.querySelectorAll(".form-field")].find((field) => !field.checkValidity());
+      if (invalidField) {
+        invalidField.focus();
+        showStatus("Please complete all required fields with a valid work email.", "error");
+        return;
+      }
+
+      trackEvent("form_submission_started", { form: "enterprise_pilot" });
+      submitButton.disabled = true;
+      submitText.textContent = "Submitting...";
+      submitSpinner.classList.remove("hidden");
+
+      const isPlaceholder = contactForm.action.includes("YOUR_FORMSPREE_ENDPOINT");
+      try {
+        if (isPlaceholder) {
+          await new Promise((resolve) => setTimeout(resolve, 700));
+        } else {
+          const response = await fetch(contactForm.action, {
+            method: "POST",
+            body: new FormData(contactForm),
+            headers: { Accept: "application/json" }
+          });
+          if (!response.ok) throw new Error("Form submission failed");
+        }
+        trackEvent("form_submission_success", { form: "enterprise_pilot", placeholder: isPlaceholder });
+        contactForm.reset();
+        showStatus(isPlaceholder ? "Prototype success. Replace the Formspree endpoint to send this form to production." : "Thanks. Your enterprise pilot request has been submitted.", "success");
+      } catch (error) {
+        trackEvent("form_submission_error", { form: "enterprise_pilot" });
+        showStatus("Something went wrong. Please try again or contact the team directly.", "error");
+      } finally {
+        submitButton.disabled = false;
+        submitText.textContent = "Request enterprise pilot";
+        submitSpinner.classList.add("hidden");
+      }
     });
   </script>
 </body>
